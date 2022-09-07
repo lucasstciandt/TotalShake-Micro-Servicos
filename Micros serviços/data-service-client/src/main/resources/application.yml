@@ -1,0 +1,13 @@
+server:
+  port: 8080
+spring:
+  cloud:
+    config:
+      profile: dev
+  config:
+    import: optional:configserver:http://localhost:8888
+  application:
+    name: data-service-client
+
+test:
+  config:
