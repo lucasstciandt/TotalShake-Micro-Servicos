@@ -1,0 +1,6 @@
+CREATE TABLE CLIENTE(
+	uuid_cliente BINARY(16) PRIMARY KEY NOT NULL,
+	nome VARCHAR(200),
+	cpf VARCHAR(11),
+	saldo DECIMAL(6,2)
+);

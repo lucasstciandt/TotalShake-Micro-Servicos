@@ -1,0 +1,8 @@
+CREATE TABLE ENDERECO(
+	id BIGINT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	uuid_cliente BINARY(16),
+	rua VARCHAR(200)NOT NULL,
+	numero int NOT NULL,
+	cep VARCHAR(8),
+	CONSTRAINT FOREIGN KEY fk_client_uuid (uuid_cliente) REFERENCES CLIENTE(uuid_cliente)
+);

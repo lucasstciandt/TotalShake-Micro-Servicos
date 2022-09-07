@@ -9,5 +9,5 @@ spring:
   application:
     name: data-service-client
 
-test:
-  config:
+
+
