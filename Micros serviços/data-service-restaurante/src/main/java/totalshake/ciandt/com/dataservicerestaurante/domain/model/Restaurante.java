@@ -25,4 +25,16 @@ public class Restaurante {
     public void setCnpj(String cnpj) {
         this.cnpj = cnpj;
     }
+
+    public UUID getUuidRestaurante() {
+        return uuidRestaurante;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getCnpj() {
+        return cnpj;
+    }
 }
