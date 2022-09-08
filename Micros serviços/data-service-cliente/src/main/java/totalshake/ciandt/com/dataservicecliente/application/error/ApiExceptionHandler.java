@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import totalshake.ciandt.com.dataservicecliente.application.error.exceptions.ClienteInexistenteException;
-import totalshake.ciandt.com.dataservicecliente.application.error.response.ErroCampoResponseDTO;
-import totalshake.ciandt.com.dataservicecliente.application.error.response.ErroDtoResponse;
+import totalshake.ciandt.com.dataservicecliente.application.error.response.ErroDTOCampoResponse;
+import totalshake.ciandt.com.dataservicecliente.application.error.response.ErroDTOResponse;
 
 import java.util.stream.Collectors;
 
@@ -16,9 +16,9 @@ import java.util.stream.Collectors;
 public class ApiExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErroDtoResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex ,
-                                                                                      WebRequest request) {
-        ErroDtoResponse error = new ErroDtoResponse(
+    public ResponseEntity<ErroDTOResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex ,
+                                                                                 WebRequest request) {
+        ErroDTOResponse error = new ErroDTOResponse(
                 HttpStatus.UNPROCESSABLE_ENTITY.value(),
                 ApiErroCodInternoMensagem.DSC001.getMensagem(),
                 ApiErroCodInternoMensagem.DSC001.getCodigo(),
@@ -26,7 +26,7 @@ public class ApiExceptionHandler {
                         .getFieldErrors()
                         .stream()
                         .map(errorField ->
-                                new ErroCampoResponseDTO(
+                                new ErroDTOCampoResponse(
                                         errorField.getDefaultMessage(),
                                         errorField.getField()
                                 )
@@ -38,8 +38,8 @@ public class ApiExceptionHandler {
     }
 
     @ExceptionHandler(ClienteInexistenteException.class)
-    public ResponseEntity<ErroDtoResponse> handlePedidoInexistenteException(ClienteInexistenteException ex, WebRequest request) {
-        ErroDtoResponse error = new ErroDtoResponse(
+    public ResponseEntity<ErroDTOResponse> handlePedidoInexistenteException(ClienteInexistenteException ex, WebRequest request) {
+        ErroDTOResponse error = new ErroDTOResponse(
                 HttpStatus.NOT_FOUND.value(),
                 ex.getMessage(),
                 ex.getCodInternoErro()

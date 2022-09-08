@@ -1,6 +1,6 @@
 package totalshake.ciandt.com.dataservicecliente.application.error.response;
 
-public record ErroCampoResponseDTO(
+public record ErroDTOCampoResponse(
         String mensagem,
         String erro
 ) { }
