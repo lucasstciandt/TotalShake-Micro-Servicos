@@ -17,4 +17,12 @@ public class Restaurante {
 
     @Column(length = 14)
     private String cnpj;
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
+    }
 }
