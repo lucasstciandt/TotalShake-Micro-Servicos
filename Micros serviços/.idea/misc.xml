@@ -5,6 +5,8 @@
       <list>
         <option value="$PROJECT_DIR$/config-server/pom.xml" />
         <option value="$PROJECT_DIR$/data-service-client/pom.xml" />
+        <option value="$PROJECT_DIR$/data-service-restaurante/pom.xml" />
+        <option value="$PROJECT_DIR$/data-service-cliente/pom.xml" />
       </list>
     </option>
   </component>
