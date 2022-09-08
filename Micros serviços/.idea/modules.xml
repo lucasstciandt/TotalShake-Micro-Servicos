@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/Micros serviços.iml" filepath="$PROJECT_DIR$/.idea/Micros serviços.iml" />
       <module fileurl="file://$PROJECT_DIR$/config-server/config-server.iml" filepath="$PROJECT_DIR$/config-server/config-server.iml" />
       <module fileurl="file://$PROJECT_DIR$/data-service-cliente/data-service-cliente.iml" filepath="$PROJECT_DIR$/data-service-cliente/data-service-cliente.iml" />
+      <module fileurl="file://$PROJECT_DIR$/data-service-entregador/data-service-entregador.iml" filepath="$PROJECT_DIR$/data-service-entregador/data-service-entregador.iml" />
       <module fileurl="file://$PROJECT_DIR$/data-service-restaurante/data-service-restaurante.iml" filepath="$PROJECT_DIR$/data-service-restaurante/data-service-restaurante.iml" />
     </modules>
   </component>

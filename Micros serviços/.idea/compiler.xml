@@ -6,14 +6,16 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="data-service-cliente" />
         <module name="config-server" />
         <module name="data-service-restaurante" />
+        <module name="data-service-cliente" />
+        <module name="data-service-entregador" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="config-server" target="17" />
       <module name="data-service-cliente" target="17" />
+      <module name="data-service-entregador" target="17" />
       <module name="data-service-restaurante" target="17" />
     </bytecodeTargetLevel>
   </component>
@@ -21,6 +23,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="config-server" options="-parameters" />
       <module name="data-service-cliente" options="-parameters" />
+      <module name="data-service-entregador" options="-parameters" />
       <module name="data-service-restaurante" options="-parameters" />
     </option>
   </component>
