@@ -29,10 +29,4 @@ public class ClienteController {
     public ResponseEntity<ClienteDTOResponse> buscarCliente(@PathVariable UUID uuidCliente){
         return ResponseEntity.ok(clienteCrudService.buscarClienteDTO(uuidCliente));
     }
-
-    @PutMapping("/atualizar/{uuidCliente}")
-    public ResponseEntity<ClienteDTOResponse> atualizarCliente(@PathVariable UUID uuidCliente,
-                                                               @RequestBody ClienteDTOPostRequest clienteBody){
-        return null;
-    }
 }
