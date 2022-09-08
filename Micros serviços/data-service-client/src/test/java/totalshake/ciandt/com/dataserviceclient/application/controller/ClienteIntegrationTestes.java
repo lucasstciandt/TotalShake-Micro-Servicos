@@ -14,9 +14,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import totalshake.ciandt.com.dataserviceclient.application.controller.request.ClienteDTOPostRequest;
 import totalshake.ciandt.com.dataserviceclient.application.error.ApiErroCodInternoMensagem;
+import totalshake.ciandt.com.dataserviceclient.builder.ClienteBuilder;
+import totalshake.ciandt.com.dataserviceclient.domain.model.Cliente;
 import totalshake.ciandt.com.dataserviceclient.domain.repository.ClienteRepository;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -117,6 +120,43 @@ class ClienteIntegrationTests {
                     33,
                     "08080808"
             );
+        }
+    }
+
+    @Nested
+    class TestesBuscaCliente{
+        @Test
+        @Transactional
+        public void deve_buscarUmClienteComSucesso_e_devolverDTOCompleto() throws Exception{
+            var cliente = ClienteBuilder.umCliente().comEndereco().build();
+
+            var clienteSalvo = clienteRepository.save(cliente);
+
+            mockMvc.perform(get(CLIENTE_URI +"/"+clienteSalvo.getUuidCliente()))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("uuid").isNotEmpty())
+                    .andExpect(jsonPath("nome").isNotEmpty())
+                    .andExpect(jsonPath("cpf").isNotEmpty())
+                    .andExpect(jsonPath("saldo").isNotEmpty())
+                    .andExpect(jsonPath("rua").isNotEmpty())
+                    .andExpect(jsonPath("numeroCasa").isNotEmpty())
+                    .andExpect(jsonPath("cep").isNotEmpty());
+
+            Cliente clienteCriado = clienteRepository.findAll().get(0);
+            assertEquals(clienteCriado, clienteSalvo);
+        }
+
+        @Test
+        @Transactional
+        public void deve_lancarExcecaoDeClienteInexistente_e_devolverErroParaOCliente() throws Exception{
+
+            mockMvc.perform(get(CLIENTE_URI +"/"+ UUID.randomUUID()))
+                    .andExpect(status().isNotFound())
+                    .andExpect(jsonPath("mensagem").value(ApiErroCodInternoMensagem.DSC002.getMensagem()))
+                    .andExpect(jsonPath("codInterno").value(ApiErroCodInternoMensagem.DSC002.getCodigo()));
+
+            int quantidadeRegistrosClienteDatabase = clienteRepository.findAll().size();
+            assertEquals(0, quantidadeRegistrosClienteDatabase);
         }
     }
 }

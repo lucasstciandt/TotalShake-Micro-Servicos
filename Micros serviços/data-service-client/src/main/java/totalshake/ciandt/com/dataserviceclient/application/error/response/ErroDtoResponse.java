@@ -7,4 +7,8 @@ public record ErroDtoResponse(
         String mensagem,
         String codInterno,
         List<ErroCampoResponseDTO> erros
-) { }
+) {
+    public ErroDtoResponse(int value, String message, String codInternoErro) {
+        this(value, message, codInternoErro, null);
+    }
+}

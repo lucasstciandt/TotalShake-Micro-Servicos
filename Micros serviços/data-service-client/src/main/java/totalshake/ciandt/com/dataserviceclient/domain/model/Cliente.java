@@ -49,6 +49,10 @@ public class Cliente {
         return uuidCliente;
     }
 
+    public String getCpf() {
+        return cpf;
+    }
+
     public String getNome() {
         return nome;
     }

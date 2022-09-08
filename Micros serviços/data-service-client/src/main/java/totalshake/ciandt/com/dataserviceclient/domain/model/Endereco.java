@@ -23,6 +23,21 @@ public class Endereco {
     @JoinColumn(name = "uuid_cliente")
     private Cliente cliente;
 
+    public String getRua() {
+        return rua;
+    }
+
+    public Integer getNumero() {
+        return numero;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
 
     public void setRua(String rua) {
         this.rua = rua;
