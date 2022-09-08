@@ -11,11 +11,11 @@ A ideia é criar uma documentação rica a medida que o projeto vai avançando, 
 <h1 align="center">📦 Métricas de Desenvolvimento </h1>
 
 - Config Server :heavy_check_mark:
-- API Gateway :x:
-- API Discovery/Naming Server :x:
 - Data Service Cliente :heavy_check_mark:
 - Data Service Restaurante :heavy_check_mark:
 - Data Service Entregador :x:
+- API Gateway :x:
+- API Discovery/Naming Server :x:
 - API de Pedidos :x:
 - API de Pagamento :x:
 - API de Restaurante :x:
