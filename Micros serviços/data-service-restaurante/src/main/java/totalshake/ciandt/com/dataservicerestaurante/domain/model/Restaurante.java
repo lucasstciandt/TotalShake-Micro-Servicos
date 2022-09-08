@@ -1,6 +1,7 @@
 package totalshake.ciandt.com.dataservicerestaurante.domain.model;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -36,5 +37,18 @@ public class Restaurante {
 
     public String getCnpj() {
         return cnpj;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Restaurante that = (Restaurante) o;
+        return Objects.equals(uuidRestaurante, that.uuidRestaurante) && Objects.equals(cnpj, that.cnpj);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(uuidRestaurante, cnpj);
     }
 }
