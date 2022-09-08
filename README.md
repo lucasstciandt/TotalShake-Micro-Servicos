@@ -1,7 +1,7 @@
 <h1 align="center">🎯 Sobre a Sistema</h1>
 Construindo aos poucos o ecossistema de micro serviços da total shake, expectativa de cumprir a arquitetura abaixo:
 
-![image](https://user-images.githubusercontent.com/110692644/189011098-0773b1df-a822-4135-b52b-700d17e05943.png)
+![image](https://user-images.githubusercontent.com/110692644/189211326-6ac996b9-c2ea-40f0-885e-f6b7ae688b6f.png)
 
 
 <h1 align="center">📌 Documentação </h1>
@@ -13,9 +13,9 @@ A ideia é criar uma documentação rica a medida que o projeto vai avançando, 
 - Config Server :heavy_check_mark:
 - Data Service Cliente :heavy_check_mark:
 - Data Service Restaurante :heavy_check_mark:
-- Data Service Entregador :x:
-- API Gateway :x:
+- Data Service Entregador :heavy_check_mark:
 - API Discovery/Naming Server :x:
+- API Gateway :x:
 - API de Pedidos :x:
 - API de Pagamento :x:
 - API de Restaurante :x:
