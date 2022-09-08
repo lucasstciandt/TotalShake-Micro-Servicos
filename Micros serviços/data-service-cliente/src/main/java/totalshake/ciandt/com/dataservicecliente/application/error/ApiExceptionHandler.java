@@ -38,7 +38,7 @@ public class ApiExceptionHandler {
     }
 
     @ExceptionHandler(ClienteInexistenteException.class)
-    public ResponseEntity<ErroDTOResponse> handlePedidoInexistenteException(ClienteInexistenteException ex, WebRequest request) {
+    public ResponseEntity<ErroDTOResponse> handleClienteInexistenteException(ClienteInexistenteException ex, WebRequest request) {
         ErroDTOResponse error = new ErroDTOResponse(
                 HttpStatus.NOT_FOUND.value(),
                 ex.getMessage(),
