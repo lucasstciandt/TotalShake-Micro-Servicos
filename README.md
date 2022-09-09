@@ -14,6 +14,7 @@ A ideia é criar uma documentação rica a medida que o projeto vai avançando, 
 - Data Service Cliente :heavy_check_mark:
 - Data Service Restaurante :heavy_check_mark:
 - Data Service Entregador :heavy_check_mark:
+- Data Service Pedido :x:
 - API Discovery/Naming Server :x:
 - API Gateway :x:
 - API de Pedidos :x:
