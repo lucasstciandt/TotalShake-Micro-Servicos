@@ -12,8 +12,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-import totalshake.ciandt.com.dataservicepedido.controller.request.ItemPedidoDTO;
-import totalshake.ciandt.com.dataservicepedido.controller.request.PedidoDTOPostRequest;
+import totalshake.ciandt.com.dataservicepedido.application.controller.request.ItemPedidoDTO;
+import totalshake.ciandt.com.dataservicepedido.application.controller.request.PedidoDTOPostRequest;
+import totalshake.ciandt.com.dataservicepedido.application.error.ApiErroCodInternoMensagem;
 import totalshake.ciandt.com.dataservicepedido.domain.model.Status;
 import totalshake.ciandt.com.dataservicepedido.domain.repository.PedidoRepository;
 
@@ -59,7 +60,7 @@ class PedidoControllerIntegrationTest {
         @Test
         @Transactional
         public void deve_criarUmPedidoComUmItem_e_devolverDTOPedidoStatusCriado() throws Exception{
-            var pedidoRequest = umPedidoDtoRequesValido();
+            var pedidoRequest = umPedidoDtoRequestValido();
 
             String pedidoRequestJson = objectMapper.writeValueAsString(pedidoRequest);
 
@@ -79,11 +80,10 @@ class PedidoControllerIntegrationTest {
             );
         }
 
-        /*
         @Test
         @Transactional
         public void deve_lancarExcecaoDeArgumentosInvalidos_e_devolverErrosParaOCliente() throws Exception{
-            var pedidoRequestInvalido = umPedidoComItensInvalidos();
+            var pedidoRequestInvalido = umPedidoDtoRequestInvalido();
 
             String pedidoRequestJson = objectMapper.writeValueAsString(pedidoRequestInvalido);
 
@@ -92,32 +92,31 @@ class PedidoControllerIntegrationTest {
                             .content(pedidoRequestJson)
                     )
                     .andExpect(status().isUnprocessableEntity())
-                    .andExpect(jsonPath("mensagem").value(CodInternoErroApi.AP001.getMensagem()))
-                    .andExpect(jsonPath("codInterno").value(CodInternoErroApi.AP001.getCodigo()))
+                    .andExpect(jsonPath("mensagem").value(ApiErroCodInternoMensagem.DSP001.getMensagem()))
+                    .andExpect(jsonPath("codInterno").value(ApiErroCodInternoMensagem.DSP001.getCodigo()))
                     .andExpect(jsonPath("erros").isNotEmpty());
 
             int registrosDePedidoNoDatabase = pedidoRepository.findAll().size();
             assertEquals(0, registrosDePedidoNoDatabase);
-        }*/
+        }
 
-        private PedidoDTOPostRequest umPedidoDtoRequesValido() {
-            var pedidoDtoValido = new PedidoDTOPostRequest(
+        private PedidoDTOPostRequest umPedidoDtoRequestValido() {
+            return new PedidoDTOPostRequest(
                     UUID.randomUUID().toString(),
                     UUID.randomUUID().toString(),
                     new BigDecimal("99.99"),
                     new ArrayList<ItemPedidoDTO>(List.of(new ItemPedidoDTO("Arroz", 2)))
             );
-
-            return pedidoDtoValido;
         }
 
-        /*
-        private PedidoDTOPostRequest umPedidoRequestValido() {
-            var pedidoDto = new PedidoDTOPostRequest(
-
+        private PedidoDTOPostRequest umPedidoDtoRequestInvalido() {
+            return new PedidoDTOPostRequest(
+                    UUID.randomUUID().toString(),
+                    UUID.randomUUID().toString(),
+                    new BigDecimal("0.00"),
+                    new ArrayList<ItemPedidoDTO>()
             );
-            return pedidoDto;
-        }*/
+        }
     }
 
 }

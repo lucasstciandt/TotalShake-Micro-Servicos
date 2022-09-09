@@ -1,4 +1,4 @@
-package totalshake.ciandt.com.dataservicepedido.controller;
+package totalshake.ciandt.com.dataservicepedido.application.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import totalshake.ciandt.com.dataservicepedido.controller.request.PedidoDTOPostRequest;
-import totalshake.ciandt.com.dataservicepedido.controller.response.PedidoDTOResponse;
+import totalshake.ciandt.com.dataservicepedido.application.controller.request.PedidoDTOPostRequest;
+import totalshake.ciandt.com.dataservicepedido.application.controller.response.PedidoDTOResponse;
 import totalshake.ciandt.com.dataservicepedido.domain.service.PedidoCrudService;
 
 import javax.validation.Valid;

@@ -1,4 +1,4 @@
-package totalshake.ciandt.com.dataservicepedido.controller.request;
+package totalshake.ciandt.com.dataservicepedido.application.controller.request;
 
 import totalshake.ciandt.com.dataservicepedido.domain.model.ItemPedido;
 

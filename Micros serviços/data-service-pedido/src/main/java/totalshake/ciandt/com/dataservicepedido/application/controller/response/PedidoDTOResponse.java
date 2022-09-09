@@ -1,4 +1,4 @@
-package totalshake.ciandt.com.dataservicepedido.controller.response;
+package totalshake.ciandt.com.dataservicepedido.application.controller.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

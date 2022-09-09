@@ -1,8 +1,8 @@
 package totalshake.ciandt.com.dataservicepedido.domain.service;
 
 import org.springframework.stereotype.Service;
-import totalshake.ciandt.com.dataservicepedido.controller.request.PedidoDTOPostRequest;
-import totalshake.ciandt.com.dataservicepedido.controller.response.PedidoDTOResponse;
+import totalshake.ciandt.com.dataservicepedido.application.controller.request.PedidoDTOPostRequest;
+import totalshake.ciandt.com.dataservicepedido.application.controller.response.PedidoDTOResponse;
 import totalshake.ciandt.com.dataservicepedido.domain.repository.PedidoRepository;
 
 @Service

@@ -1,8 +1,7 @@
-package totalshake.ciandt.com.dataservicepedido.controller.request;
+package totalshake.ciandt.com.dataservicepedido.application.controller.request;
 
 import totalshake.ciandt.com.dataservicepedido.domain.model.ItemPedido;
 import totalshake.ciandt.com.dataservicepedido.domain.model.Pedido;
-import totalshake.ciandt.com.dataservicepedido.domain.model.Status;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
