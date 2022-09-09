@@ -76,6 +76,26 @@ public class Pedido {
         return status;
     }
 
+    public UUID getUuidCliente() {
+        return uuidCliente;
+    }
+
+    public UUID getUuidRestaurante() {
+        return uuidRestaurante;
+    }
+
+    public UUID getUuidEntregador() {
+        return uuidEntregador;
+    }
+
+    public BigDecimal getTotal() {
+        return total;
+    }
+
+    public LocalDateTime getUltimaAtualizacao() {
+        return ultimaAtualizacao;
+    }
+
     public void setUuidCliente(UUID uuidCliente) {
         this.uuidCliente = uuidCliente;
     }

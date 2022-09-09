@@ -2,15 +2,13 @@ package totalshake.ciandt.com.dataservicepedido.application.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import totalshake.ciandt.com.dataservicepedido.application.controller.request.PedidoDTOPostRequest;
 import totalshake.ciandt.com.dataservicepedido.application.controller.response.PedidoDTOResponse;
 import totalshake.ciandt.com.dataservicepedido.domain.service.PedidoCrudService;
 
 import javax.validation.Valid;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/v1/pedidos")
@@ -27,5 +25,10 @@ public class PedidoController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(pedidoCrudService.criarPedido(pedidoPostRequest));
+    }
+
+    @GetMapping("/{uuidPedido}")
+    public ResponseEntity<PedidoDTOResponse> buscarPedido(@PathVariable UUID uuidPedido){
+        return ResponseEntity.ok(pedidoCrudService.buscarPedidoDto(uuidPedido));
     }
 }
