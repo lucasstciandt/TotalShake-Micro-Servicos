@@ -15,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 import totalshake.ciandt.com.dataservicepedido.application.controller.request.ItemPedidoDTO;
 import totalshake.ciandt.com.dataservicepedido.application.controller.request.PedidoDTOPostRequest;
 import totalshake.ciandt.com.dataservicepedido.application.error.ApiErroCodInternoMensagem;
+import totalshake.ciandt.com.dataservicepedido.builders.PedidoBuilder;
+import totalshake.ciandt.com.dataservicepedido.domain.model.Pedido;
 import totalshake.ciandt.com.dataservicepedido.domain.model.Status;
 import totalshake.ciandt.com.dataservicepedido.domain.repository.PedidoRepository;
 
@@ -25,6 +27,7 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -117,6 +120,51 @@ class PedidoControllerIntegrationTest {
                     new ArrayList<ItemPedidoDTO>()
             );
         }
+    }
+
+    @Nested
+    class TestesBuscaDePedido{
+        @Test
+        @Transactional
+        public void deve_buscarUmPedidoComSucesso_e_devolverDTOCompleto() throws Exception{
+            var pedido = PedidoBuilder.umPedido().comUmItemPedido().build();
+
+            var pedidoSalvo = pedidoRepository.save(pedido);
+
+            mockMvc.perform(get(PEDIDO_URI +"/"+pedidoSalvo.getUuidPedido()))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("uuid_pedido").isNotEmpty())
+                    .andExpect(jsonPath("uuid_cliente").isNotEmpty())
+                    .andExpect(jsonPath("uuid_restaurante").isNotEmpty())
+                    .andExpect(jsonPath("status").isNotEmpty())
+                    .andExpect(jsonPath("total").isNotEmpty())
+                    .andExpect(jsonPath("ultimaAtualizacao").isNotEmpty())
+                    .andExpect(jsonPath("itens").isNotEmpty())
+                    .andExpect(jsonPath("dataHoraStatus").isNotEmpty());
+
+            Pedido pedidoCriado = pedidoRepository.findAll().get(0);
+
+            assertAll(
+                    () -> assertNull(pedidoCriado.getUuidEntregador()),
+                    () -> assertEquals(1, pedidoCriado.getItens().size()),
+                    () -> assertNotNull(pedidoCriado.getDataHoraStatus().getDataHoraCriado()),
+                    () -> assertNotNull(pedidoCriado.getTotal())
+            );
+        }
+
+        @Test
+        @Transactional
+        public void deve_lancarExcecaoDePedidoInexistente_e_devolverDTODeErroParaOCliente() throws Exception{
+
+            mockMvc.perform(get(PEDIDO_URI +"/"+ UUID.randomUUID()))
+                    .andExpect(status().isNotFound())
+                    .andExpect(jsonPath("mensagem").value(ApiErroCodInternoMensagem.DSP002.getMensagem()))
+                    .andExpect(jsonPath("codInterno").value(ApiErroCodInternoMensagem.DSP002.getCodigo()));
+
+            int registrosDePedidoNoDatabase = pedidoRepository.findAll().size();
+            assertEquals(0, registrosDePedidoNoDatabase);
+        }
+
     }
 
 }
