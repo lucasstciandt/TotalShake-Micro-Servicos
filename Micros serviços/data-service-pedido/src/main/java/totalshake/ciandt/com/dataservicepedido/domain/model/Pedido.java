@@ -112,6 +112,10 @@ public class Pedido {
         this.status = status;
     }
 
+    public void setDataHoraStatus(DataHoraStatusPedido dataHoraStatus) {
+        this.dataHoraStatus = dataHoraStatus;
+    }
+
     @PrePersist
     public void setarUltimaAtualizacaoPedido(){
         this.ultimaAtualizacao = LocalDateTime.now();

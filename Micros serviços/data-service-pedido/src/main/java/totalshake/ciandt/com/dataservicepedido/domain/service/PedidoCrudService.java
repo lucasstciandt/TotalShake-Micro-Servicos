@@ -1,11 +1,12 @@
 package totalshake.ciandt.com.dataservicepedido.domain.service;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import totalshake.ciandt.com.dataservicepedido.application.controller.request.AtualizacaoPedidoDTORequest;
 import totalshake.ciandt.com.dataservicepedido.application.controller.request.PedidoDTOPostRequest;
 import totalshake.ciandt.com.dataservicepedido.application.controller.response.PedidoDTOResponse;
 import totalshake.ciandt.com.dataservicepedido.application.error.ApiErroCodInternoMensagem;
 import totalshake.ciandt.com.dataservicepedido.application.error.exceptions.PedidoInexistenteException;
+import totalshake.ciandt.com.dataservicepedido.domain.model.DataHoraStatusPedido;
 import totalshake.ciandt.com.dataservicepedido.domain.model.Pedido;
 import totalshake.ciandt.com.dataservicepedido.domain.repository.PedidoRepository;
 
@@ -28,6 +29,23 @@ public class PedidoCrudService {
         pedido = pedidoRepository.save(pedido);
 
         return new PedidoDTOResponse(pedido.getUuidPedido());
+    }
+
+    public PedidoDTOResponse atualizarPedido(UUID uuidPedido, AtualizacaoPedidoDTORequest atualizacaoDtoRequest) {
+        var pedido = this.buscarPedidoPorId(uuidPedido);
+        var dataHoraStatusPedidoAtualizado = atualizarDataHoraStatus(atualizacaoDtoRequest, pedido);
+
+        pedido.setStatus(atualizacaoDtoRequest.status());
+        pedido.setDataHoraStatus(dataHoraStatusPedidoAtualizado);
+
+        pedido = pedidoRepository.save(pedido);
+
+        return new PedidoDTOResponse(
+                pedido.getUuidPedido(),
+                pedido.getStatus(),
+                pedido.getUltimaAtualizacao(),
+                pedido.getDataHoraStatus()
+        );
     }
 
     public PedidoDTOResponse buscarPedidoDto(UUID uuidPedido){
@@ -56,4 +74,20 @@ public class PedidoCrudService {
                         )
                 );
     }
+
+    private  DataHoraStatusPedido atualizarDataHoraStatus(AtualizacaoPedidoDTORequest atualizacaoDtoRequest, Pedido pedido) {
+        var dataHoraStatusPedido = pedido.getDataHoraStatus();
+
+        dataHoraStatusPedido.setDataHoraRealizado(atualizacaoDtoRequest.dataHoraRealizado());
+        dataHoraStatusPedido.setDataHoraPago(atualizacaoDtoRequest.dataHoraPago());
+        dataHoraStatusPedido.setDataHoraConfirmado(atualizacaoDtoRequest.dataHoraConfirmado());
+        dataHoraStatusPedido.setDataHoraPronto(atualizacaoDtoRequest.dataHoraPronto());
+        dataHoraStatusPedido.setDataHoraSaiuParaEntrega(atualizacaoDtoRequest.dataHoraSaiuParaEntrega());
+        dataHoraStatusPedido.setDataHoraEntrega(atualizacaoDtoRequest.dataHoraEntrega());
+        dataHoraStatusPedido.setDataHoraCancelado(atualizacaoDtoRequest.dataHoraCancelado());
+        dataHoraStatusPedido.setDataHoraPagamentoRecusado(atualizacaoDtoRequest.dataHoraPagamentoRecusado());
+
+        return dataHoraStatusPedido;
+    }
+
 }

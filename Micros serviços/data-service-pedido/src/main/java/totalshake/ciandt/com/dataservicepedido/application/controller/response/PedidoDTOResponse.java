@@ -38,4 +38,10 @@ public record PedidoDTOResponse(
                         null, null, null,
                         null, null, null);
         }
+
+        public PedidoDTOResponse(UUID uuid_pedido, Status status, LocalDateTime ultimaAtualizacao,
+                                 DataHoraStatusPedido dataHoraStatusPedido) {
+                this(uuid_pedido, null, null, null,
+                        status, null, ultimaAtualizacao, null, dataHoraStatusPedido);
+        }
 }
