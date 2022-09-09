@@ -10,12 +10,14 @@
         <module name="data-service-restaurante" />
         <module name="data-service-cliente" />
         <module name="data-service-entregador" />
+        <module name="data-service-pedido" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="config-server" target="17" />
       <module name="data-service-cliente" target="17" />
       <module name="data-service-entregador" target="17" />
+      <module name="data-service-pedido" target="17" />
       <module name="data-service-restaurante" target="17" />
     </bytecodeTargetLevel>
   </component>
@@ -24,6 +26,7 @@
       <module name="config-server" options="-parameters" />
       <module name="data-service-cliente" options="-parameters" />
       <module name="data-service-entregador" options="-parameters" />
+      <module name="data-service-pedido" options="-parameters" />
       <module name="data-service-restaurante" options="-parameters" />
     </option>
   </component>
