@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import totalshake.ciandt.com.dataservicepedido.application.controller.request.AtualizacaoPedidoDTORequest;
 import totalshake.ciandt.com.dataservicepedido.application.controller.request.PedidoDTOPostRequest;
 import totalshake.ciandt.com.dataservicepedido.application.controller.response.PedidoDTOResponse;
-import totalshake.ciandt.com.dataservicepedido.domain.model.Status;
 import totalshake.ciandt.com.dataservicepedido.domain.service.PedidoCrudService;
 
 import javax.validation.Valid;

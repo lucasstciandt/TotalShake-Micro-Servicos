@@ -1,5 +1,6 @@
 package totalshake.ciandt.com.dataservicepedido.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+import totalshake.ciandt.com.dataservicepedido.application.controller.request.AtualizacaoPedidoDTORequest;
 import totalshake.ciandt.com.dataservicepedido.application.controller.request.ItemPedidoDTO;
 import totalshake.ciandt.com.dataservicepedido.application.controller.request.PedidoDTOPostRequest;
 import totalshake.ciandt.com.dataservicepedido.application.error.ApiErroCodInternoMensagem;
@@ -21,14 +23,16 @@ import totalshake.ciandt.com.dataservicepedido.domain.model.Status;
 import totalshake.ciandt.com.dataservicepedido.domain.repository.PedidoRepository;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -167,4 +171,79 @@ class PedidoControllerIntegrationTest {
 
     }
 
+    @Nested
+    class TestesAtualizarPedido{
+
+        @Test
+        @Transactional
+        public void deve_atualizarUmPedido_e_devolverDtoComStatusHoraStatusAtualUUID() throws Exception {
+            var pedido = PedidoBuilder.umPedido().comUmItemPedido().build();
+            var pedidoSalvo = pedidoRepository.save(pedido);
+
+            var atualizacaoPedidoDtoValido = umDtoAtualizacaoPedido();
+            String pedidoRequestJson = objectMapper.writeValueAsString(atualizacaoPedidoDtoValido);
+
+            mockMvc.perform(put(PEDIDO_URI + "/" +  pedidoSalvo.getUuidPedido() )
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(pedidoRequestJson)
+                    )
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("uuid_pedido").isNotEmpty())
+                    .andExpect(jsonPath("status").value(Status.REALIZADO.name()))
+                    .andExpect(jsonPath("ultimaAtualizacao").isNotEmpty())
+                    .andExpect(jsonPath("dataHoraStatus").isNotEmpty());
+
+            var pedidoCriado = pedidoRepository.findAll().get(0);
+
+            assertAll(
+                    () -> assertEquals(1, pedidoCriado.getItens().size()),
+                    () -> assertEquals(Status.REALIZADO, pedidoCriado.getStatus()),
+                    () -> assertNotNull(pedidoCriado.getDataHoraStatus().getDataHoraCriado()),
+                    () -> assertNotNull(pedidoCriado.getDataHoraStatus().getDataHoraRealizado())
+            );
+        }
+
+        @Test
+        @Transactional
+        public void deve_lancarExcecaoDeCampoInvalidoQuando_atualizacaoNaoTiverStatus() throws Exception {
+            var pedido = PedidoBuilder.umPedido().comUmItemPedido().build();
+            var pedidoSalvo = pedidoRepository.save(pedido);
+
+            var atualizacaoPedidoDtoValido = umDtoAtualizacaoInvalido();
+            String pedidoRequestJson = objectMapper.writeValueAsString(atualizacaoPedidoDtoValido);
+
+            mockMvc.perform(put(PEDIDO_URI + "/" +  pedidoSalvo.getUuidPedido() )
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(pedidoRequestJson)
+                    )
+                    .andExpect(status().isUnprocessableEntity())
+                    .andExpect(jsonPath("mensagem").value(ApiErroCodInternoMensagem.DSP001.getMensagem()))
+                    .andExpect(jsonPath("codInterno").value(ApiErroCodInternoMensagem.DSP001.getCodigo()))
+                    .andExpect(jsonPath("erros").isNotEmpty());
+
+
+            var pedidoCriado = pedidoRepository.findAll().get(0);
+
+            assertAll(
+                    () -> assertEquals(1, pedidoCriado.getItens().size()),
+                    () -> assertNotEquals(Status.REALIZADO, pedidoCriado.getStatus()),
+                    () -> assertNotNull(pedidoCriado.getDataHoraStatus().getDataHoraCriado()),
+                    () -> assertNull(pedidoCriado.getDataHoraStatus().getDataHoraRealizado())
+            );
+        }
+
+        private AtualizacaoPedidoDTORequest umDtoAtualizacaoInvalido() {
+            return new AtualizacaoPedidoDTORequest(
+                    null,
+                    LocalDateTime.now()
+            );
+        }
+
+        private AtualizacaoPedidoDTORequest umDtoAtualizacaoPedido() {
+            return new AtualizacaoPedidoDTORequest(
+                    Status.REALIZADO,
+                    LocalDateTime.now()
+            );
+        }
+    }
 }

@@ -34,4 +34,9 @@ public record AtualizacaoPedidoDTORequest(
         @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
         LocalDateTime dataHoraPagamentoRecusado
 ) {
+
+        public AtualizacaoPedidoDTORequest(Status status, LocalDateTime dataHoraRealizado) {
+                this(status, dataHoraRealizado, null, null, null,
+                        null, null, null, null);
+        }
 }

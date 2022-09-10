@@ -66,6 +66,10 @@ public class DataHoraStatusPedido {
         return dataHoraCriado;
     }
 
+    public LocalDateTime getDataHoraRealizado() {
+        return dataHoraRealizado;
+    }
+
     public void setDataHoraCriado(LocalDateTime dataHoraCriado) {
         this.dataHoraCriado = dataHoraCriado;
     }
