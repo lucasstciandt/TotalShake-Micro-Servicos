@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="config-server" />
+        <module name="data-service-restaurante" />
+        <module name="data-service-cliente" />
+        <module name="data-service-entregador" />
+        <module name="data-service-pedido" />
+        <module name="naming-server" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="config-server" target="17" />
+      <module name="data-service-cliente" target="17" />
+      <module name="data-service-entregador" target="17" />
+      <module name="data-service-pedido" target="17" />
+      <module name="data-service-restaurante" target="17" />
+      <module name="naming-server" target="17" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="config-server" options="-parameters" />
+      <module name="data-service-cliente" options="-parameters" />
+      <module name="data-service-entregador" options="-parameters" />
+      <module name="data-service-pedido" options="-parameters" />
+      <module name="data-service-restaurante" options="-parameters" />
+      <module name="naming-server" options="-parameters" />
+    </option>
+  </component>
+</project>

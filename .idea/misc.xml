@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/Micros serviços/data-service-restaurante/pom.xml" />
+        <option value="$PROJECT_DIR$/Micros serviços/data-service-pedido/pom.xml" />
+        <option value="$PROJECT_DIR$/Micros serviços/data-service-entregador/pom.xml" />
+        <option value="$PROJECT_DIR$/Micros serviços/data-service-cliente/pom.xml" />
+        <option value="$PROJECT_DIR$/Micros serviços/config-server/pom.xml" />
+        <option value="$PROJECT_DIR$/Micros serviços/naming-server/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="17" project-jdk-type="JavaSDK" />
+</project>

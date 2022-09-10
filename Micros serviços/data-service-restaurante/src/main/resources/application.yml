@@ -8,3 +8,7 @@ spring:
     import: optional:configserver:http://localhost:8888
   application:
     name: data-service-restaurante
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8765/eureka/
