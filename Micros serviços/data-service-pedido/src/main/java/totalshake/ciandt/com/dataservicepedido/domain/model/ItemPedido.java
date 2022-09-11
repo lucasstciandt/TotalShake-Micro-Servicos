@@ -31,6 +31,10 @@ public class ItemPedido {
         return descricao;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public void setPedido(Pedido pedido) {
         this.pedido = pedido;
     }

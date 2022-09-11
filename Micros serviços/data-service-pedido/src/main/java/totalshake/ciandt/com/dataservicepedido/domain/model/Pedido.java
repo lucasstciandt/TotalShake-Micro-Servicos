@@ -100,6 +100,7 @@ public class Pedido {
         this.uuidCliente = uuidCliente;
     }
 
+
     public void setUuidRestaurante(UUID uuidRestaurante) {
         this.uuidRestaurante = uuidRestaurante;
     }

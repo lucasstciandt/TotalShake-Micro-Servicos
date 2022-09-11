@@ -30,7 +30,7 @@ public record PedidoDTOResponse(
         @JsonIgnoreProperties("pedido")
         List<ItemPedido> itens,
 
-        @JsonIgnoreProperties(value = {"pedido", "id"})
+        @JsonIgnoreProperties(value = "pedido")
         DataHoraStatusPedido dataHoraStatus
 ) {
         public PedidoDTOResponse(UUID uuid_pedido) {

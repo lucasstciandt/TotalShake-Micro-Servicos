@@ -1,0 +1,15 @@
+server:
+  port: 8668
+spring:
+  cloud:
+    config:
+      profile: dev
+  config:
+    import: optional:configserver:http://localhost:8888
+  application:
+    name: api-pedido
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8765/eureka/
+

@@ -1,4 +1,4 @@
-package totalshake.ciandt.com.dataservicepedido.domain.model;
+package totalshake.ciandt.com.apipedido.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -14,7 +14,7 @@ public class DataHoraStatusPedido {
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "pedido_uuid")
+    @JoinColumn(name = "pedido_uuid", referencedColumnName = "uuid_pedido")
     private Pedido pedido;
 
     @Column(name = "data_hora_criado")
@@ -58,8 +58,12 @@ public class DataHoraStatusPedido {
         this.dataHoraCriado = LocalDateTime.now();
     }
 
-    public void setPedido(Pedido pedido) {
-        this.pedido = pedido;
+    public void salvarDataHoraRealizado(){
+        this.dataHoraRealizado = LocalDateTime.now();
+    }
+
+    public void salvarDataHoraCancelado(){
+        this.dataHoraCancelado = LocalDateTime.now();
     }
 
     public LocalDateTime getDataHoraCriado() {
@@ -70,43 +74,11 @@ public class DataHoraStatusPedido {
         return dataHoraRealizado;
     }
 
-    public void setDataHoraCriado(LocalDateTime dataHoraCriado) {
-        this.dataHoraCriado = dataHoraCriado;
+    public LocalDateTime getDataHoraCancelado() {
+        return dataHoraCancelado;
     }
 
-    public void setDataHoraRealizado(LocalDateTime dataHoraRealizado) {
-        this.dataHoraRealizado = dataHoraRealizado;
-    }
-
-    public void setDataHoraCancelado(LocalDateTime dataHoraCancelado) {
-        this.dataHoraCancelado = dataHoraCancelado;
-    }
-
-    public void setDataHoraPago(LocalDateTime dataHoraPago) {
-        this.dataHoraPago = dataHoraPago;
-    }
-
-    public void setDataHoraConfirmado(LocalDateTime dataHoraConfirmado) {
-        this.dataHoraConfirmado = dataHoraConfirmado;
-    }
-
-    public void setDataHoraPronto(LocalDateTime dataHoraPronto) {
-        this.dataHoraPronto = dataHoraPronto;
-    }
-
-    public void setDataHoraSaiuParaEntrega(LocalDateTime dataHoraSaiuParaEntrega) {
-        this.dataHoraSaiuParaEntrega = dataHoraSaiuParaEntrega;
-    }
-
-    public void setDataHoraEntrega(LocalDateTime dataHoraEntrega) {
-        this.dataHoraEntrega = dataHoraEntrega;
-    }
-
-    public void setDataHoraPagamentoRecusado(LocalDateTime dataHoraPagamentoRecusado) {
-        this.dataHoraPagamentoRecusado = dataHoraPagamentoRecusado;
-    }
-
-    public Long getId() {
-        return id;
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
     }
 }
