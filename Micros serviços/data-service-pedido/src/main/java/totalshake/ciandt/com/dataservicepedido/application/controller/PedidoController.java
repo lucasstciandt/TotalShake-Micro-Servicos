@@ -35,10 +35,11 @@ public class PedidoController {
         return ResponseEntity.ok(pedidoCrudService.buscarPedidoDto(uuidPedido));
     }
 
-    @PutMapping("/{uuidPedido}/atualizar")
-    public ResponseEntity<PedidoDTOResponse> atualizarPedido(@PathVariable UUID uuidPedido,
-                                                                   @RequestBody AtualizacaoCompletaPedidoDTORequest pedidoAtualizado){
-        return ResponseEntity.ok(pedidoCrudService.atualizarPedido(uuidPedido, pedidoAtualizado));
+    @PutMapping("/atualizar")
+    public ResponseEntity<PedidoDTOResponse> atualizarPedido(
+            @RequestBody AtualizacaoCompletaPedidoDTORequest pedidoAtualizado
+    ){
+        return ResponseEntity.ok(pedidoCrudService.atualizarPedido(pedidoAtualizado));
     }
 
     @PutMapping("/{uuidPedido}")

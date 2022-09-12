@@ -12,13 +12,13 @@ import java.util.List;
 import java.util.UUID;
 
 public record PedidoDTOResponse(
-        UUID uuid_pedido,
+        UUID uuidPedido,
 
-        UUID uuid_cliente,
+        UUID uuidCliente,
 
-        UUID uuid_restaurante,
+        UUID uuidRestaurante,
 
-        UUID uuid_entregador,
+        UUID uuidEntregador,
 
         Status status,
 

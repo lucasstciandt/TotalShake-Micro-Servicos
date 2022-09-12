@@ -181,6 +181,14 @@ public class Pedido {
         return uuidRestaurante;
     }
 
+    public UUID getUuidEntregador() {
+        return uuidEntregador;
+    }
+
+    public BigDecimal getTotal() {
+        return total;
+    }
+
     public LocalDateTime getUltimaAtualizacao() {
         return ultimaAtualizacao;
     }

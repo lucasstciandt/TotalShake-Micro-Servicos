@@ -13,11 +13,9 @@ import java.util.UUID;
 public class PedidoController {
 
     private final PedidoCrudService pedidoCrudService;
-    private final DataServicePedidoProxy dataServicePedidoProxy;
 
-    public PedidoController(PedidoCrudService pedidoCrudService, DataServicePedidoProxy dataServicePedidoProxy) {
+    public PedidoController(PedidoCrudService pedidoCrudService) {
         this.pedidoCrudService = pedidoCrudService;
-        this.dataServicePedidoProxy = dataServicePedidoProxy;
     }
 
     //todo falta concluir lógica completa da operação, parcialmente funcional

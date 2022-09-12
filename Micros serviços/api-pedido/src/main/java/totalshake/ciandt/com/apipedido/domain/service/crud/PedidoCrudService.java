@@ -3,6 +3,7 @@ package totalshake.ciandt.com.apipedido.domain.service.crud;
 import totalshake.ciandt.com.apipedido.domain.repository.PedidoRepository;
 import org.springframework.stereotype.Service;
 import totalshake.ciandt.com.apipedido.proxy.DataServicePedidoProxy;
+import totalshake.ciandt.com.apipedido.proxy.request.put.AtualizacaoPedidoCompletaDTORequest;
 import totalshake.ciandt.com.apipedido.proxy.response.PedidoDTOGetResponse;
 
 import java.util.UUID;
@@ -10,11 +11,9 @@ import java.util.UUID;
 @Service
 public class PedidoCrudService {
 
-    private final PedidoRepository pedidoRepository;
     private final DataServicePedidoProxy dataServicePedidoProxy;
 
-    public PedidoCrudService(PedidoRepository pedidoRepository, DataServicePedidoProxy dataServicePedidoProxy) {
-        this.pedidoRepository = pedidoRepository;
+    public PedidoCrudService(DataServicePedidoProxy dataServicePedidoProxy) {
         this.dataServicePedidoProxy = dataServicePedidoProxy;
     }
 
@@ -22,19 +21,21 @@ public class PedidoCrudService {
         var pedidoDto = this.dataServicePedidoProxy.buscarPedido(pedidoId);
 
         var pedidoModel = pedidoDto.toPedidoModel();
+
         pedidoModel.acrescentarItemDoPedido(itemId, quantidade);
 
-        //todo Usar o data Service para salvar o resultado da operação de negócio
-        pedidoModel = this.pedidoRepository.save(pedidoModel);
-
-        return new PedidoDTOGetResponse(
+        var pedidoDtoAtualizacao = new AtualizacaoPedidoCompletaDTORequest(
                 pedidoModel.getUuidPedido(),
                 pedidoModel.getUuidCliente(),
                 pedidoModel.getUuidRestaurante(),
+                pedidoModel.getUuidEntregador(),
                 pedidoModel.getStatus(),
-                pedidoModel.getUltimaAtualizacao(),
-                pedidoModel.getItens()
+                pedidoModel.getTotal(),
+                pedidoModel.getItens(),
+                pedidoModel.getDataHoraStatus()
         );
+
+        return this.dataServicePedidoProxy.atualizarPedido(pedidoDtoAtualizacao);
     }
 
 

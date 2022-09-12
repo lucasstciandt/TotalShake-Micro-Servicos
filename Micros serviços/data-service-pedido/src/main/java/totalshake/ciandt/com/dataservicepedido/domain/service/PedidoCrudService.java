@@ -32,7 +32,7 @@ public class PedidoCrudService {
         return new PedidoDTOResponse(pedido.getUuidPedido());
     }
 
-    public PedidoDTOResponse atualizarPedido(UUID uuidPedido, AtualizacaoCompletaPedidoDTORequest pedidoAtualizado) {
+    public PedidoDTOResponse atualizarPedido(AtualizacaoCompletaPedidoDTORequest pedidoAtualizado) {
         var pedido = pedidoAtualizado.toPedidoModel();
         pedido = this.pedidoRepository.save(pedido);
 

@@ -1,6 +1,7 @@
 package totalshake.ciandt.com.apipedido.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -66,6 +67,10 @@ public class DataHoraStatusPedido {
         this.dataHoraCancelado = LocalDateTime.now();
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public LocalDateTime getDataHoraCriado() {
         return dataHoraCriado;
     }
@@ -76,6 +81,34 @@ public class DataHoraStatusPedido {
 
     public LocalDateTime getDataHoraCancelado() {
         return dataHoraCancelado;
+    }
+
+    public LocalDateTime getDataHoraPago() {
+        return dataHoraPago;
+    }
+
+    public LocalDateTime getDataHoraConfirmado() {
+        return dataHoraConfirmado;
+    }
+
+    public LocalDateTime getDataHoraPronto() {
+        return dataHoraPronto;
+    }
+
+    public LocalDateTime getDataHoraSaiuParaEntrega() {
+        return dataHoraSaiuParaEntrega;
+    }
+
+    public LocalDateTime getDataHoraEntrega() {
+        return dataHoraEntrega;
+    }
+
+    public LocalDateTime getDataHoraPagamentoRecusado() {
+        return dataHoraPagamentoRecusado;
+    }
+
+    public Pedido getPedido() {
+        return pedido;
     }
 
     public void setPedido(Pedido pedido) {

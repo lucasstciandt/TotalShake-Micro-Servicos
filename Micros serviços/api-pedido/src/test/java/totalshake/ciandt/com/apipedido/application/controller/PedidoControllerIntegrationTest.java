@@ -56,6 +56,7 @@ public class PedidoControllerIntegrationTest {
        pedidoRepository.deleteAll();
     }
 
+    /*
     @Nested
     class TestesCriacaoDePedido{
 
@@ -390,6 +391,6 @@ public class PedidoControllerIntegrationTest {
             var pedidoSemItens = pedidoRepository.findAll().get(0);
             assertEquals(0, pedidoSemItens.getItens().size());
         }
-    }
+    }*/
 
 }

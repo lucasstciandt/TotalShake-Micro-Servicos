@@ -1,6 +1,7 @@
 package totalshake.ciandt.com.apipedido.proxy.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import totalshake.ciandt.com.apipedido.domain.model.DataHoraStatusPedido;
 import totalshake.ciandt.com.apipedido.domain.model.ItemPedido;
 import totalshake.ciandt.com.apipedido.domain.model.Pedido;
@@ -13,13 +14,13 @@ import java.util.List;
 import java.util.UUID;
 
 public record PedidoDTOGetResponse(
-        UUID uuid_pedido,
+        UUID uuidPedido,
 
-        UUID uuid_cliente,
+        UUID uuidCliente,
 
-        UUID uuid_restaurante,
+        UUID uuidRestaurante,
 
-        UUID uuid_entregador,
+        UUID uuidEntregador,
 
         Status status,
 
@@ -28,8 +29,10 @@ public record PedidoDTOGetResponse(
         @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
         LocalDateTime ultimaAtualizacao,
 
+        @JsonIgnoreProperties("pedido")
         List<ItemPedido> itens,
 
+        @JsonIgnoreProperties("pedido")
         DataHoraStatusPedido dataHoraStatus
 ) {
         public PedidoDTOGetResponse(UUID uuid_pedido) {
@@ -53,10 +56,10 @@ public record PedidoDTOGetResponse(
 
         public Pedido toPedidoModel() {
                 var pedido = new Pedido();
-                pedido.setUuidPedido(this.uuid_pedido);
-                pedido.setUuidCliente(this.uuid_cliente);
-                pedido.setUuidRestaurante(this.uuid_restaurante);
-                pedido.setUuidEntregador(this.uuid_entregador);
+                pedido.setUuidPedido(this.uuidPedido);
+                pedido.setUuidCliente(this.uuidCliente);
+                pedido.setUuidRestaurante(this.uuidRestaurante);
+                pedido.setUuidEntregador(this.uuidEntregador);
                 pedido.setStatus(this.status);
                 pedido.setUltimaAtualizacao(this.ultimaAtualizacao);
                 pedido.setDataHoraStatus(this.dataHoraStatus);

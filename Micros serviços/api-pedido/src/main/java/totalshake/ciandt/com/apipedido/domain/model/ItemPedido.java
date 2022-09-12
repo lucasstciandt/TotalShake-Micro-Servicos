@@ -1,5 +1,6 @@
 package totalshake.ciandt.com.apipedido.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import totalshake.ciandt.com.apipedido.application.errors.exceptions.QuantidadeInvalidaException;
 import totalshake.ciandt.com.apipedido.application.errors.CodInternoErroApi;
 
@@ -44,6 +45,8 @@ public class ItemPedido {
     public String getDescricao() {
         return descricao;
     }
+
+
 
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
