@@ -48,23 +48,6 @@ public class PedidoCrudService {
         );
     }
 
-    public PedidoDTOResponse atualizarStatusPedido(UUID uuidPedido, AtualizacaoStatusPedidoDTORequest atualizacaoDtoRequest) {
-        var pedido = this.buscarPedidoPorId(uuidPedido);
-        var dataHoraStatusPedidoAtualizado = atualizarDataHoraStatus(atualizacaoDtoRequest, pedido);
-
-        pedido.setStatus(atualizacaoDtoRequest.status());
-        pedido.setDataHoraStatus(dataHoraStatusPedidoAtualizado);
-
-        pedido = pedidoRepository.save(pedido);
-
-        return new PedidoDTOResponse(
-                pedido.getUuidPedido(),
-                pedido.getStatus(),
-                pedido.getUltimaAtualizacao(),
-                pedido.getDataHoraStatus()
-        );
-    }
-
     public PedidoDTOResponse buscarPedidoDto(UUID uuidPedido){
         var pedido = this.buscarPedidoPorId(uuidPedido);
 
@@ -91,21 +74,5 @@ public class PedidoCrudService {
                         )
                 );
     }
-
-    private  DataHoraStatusPedido atualizarDataHoraStatus(AtualizacaoStatusPedidoDTORequest atualizacaoDtoRequest, Pedido pedido) {
-        var dataHoraStatusPedido = pedido.getDataHoraStatus();
-
-        dataHoraStatusPedido.setDataHoraRealizado(atualizacaoDtoRequest.dataHoraRealizado());
-        dataHoraStatusPedido.setDataHoraPago(atualizacaoDtoRequest.dataHoraPago());
-        dataHoraStatusPedido.setDataHoraConfirmado(atualizacaoDtoRequest.dataHoraConfirmado());
-        dataHoraStatusPedido.setDataHoraPronto(atualizacaoDtoRequest.dataHoraPronto());
-        dataHoraStatusPedido.setDataHoraSaiuParaEntrega(atualizacaoDtoRequest.dataHoraSaiuParaEntrega());
-        dataHoraStatusPedido.setDataHoraEntrega(atualizacaoDtoRequest.dataHoraEntrega());
-        dataHoraStatusPedido.setDataHoraCancelado(atualizacaoDtoRequest.dataHoraCancelado());
-        dataHoraStatusPedido.setDataHoraPagamentoRecusado(atualizacaoDtoRequest.dataHoraPagamentoRecusado());
-
-        return dataHoraStatusPedido;
-    }
-
 
 }
