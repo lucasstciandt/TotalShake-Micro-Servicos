@@ -60,6 +60,14 @@ public class Pedido {
         this.dataHoraStatus.salvarDataHoraCriacao();
     }
 
+    public void setUuidPedido(UUID uuidPedido) {
+        this.uuidPedido = uuidPedido;
+    }
+
+    public void setUuidEntregador(UUID uuidEntregador) {
+        this.uuidEntregador = uuidEntregador;
+    }
+
     public UUID getUuidPedido() {
         return uuidPedido;
     }
@@ -114,6 +122,7 @@ public class Pedido {
     }
 
     public void setDataHoraStatus(DataHoraStatusPedido dataHoraStatus) {
+        dataHoraStatus.setPedido(this);
         this.dataHoraStatus = dataHoraStatus;
     }
 

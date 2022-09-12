@@ -1,4 +1,4 @@
-package totalshake.ciandt.com.dataservicepedido.application.controller.request;
+package totalshake.ciandt.com.dataservicepedido.application.controller.request.post;
 
 import totalshake.ciandt.com.dataservicepedido.domain.model.ItemPedido;
 import totalshake.ciandt.com.dataservicepedido.domain.model.Pedido;
@@ -22,7 +22,7 @@ public record PedidoDTOPostRequest(
         BigDecimal total,
 
         @NotNull @NotEmpty
-        List<@Valid ItemPedidoDTO> itens
+        List<@Valid ItemPedidoDTOPostRequest> itens
 ) {
         public Pedido toPedidoModel() {
                 var pedido = new Pedido();
@@ -32,7 +32,7 @@ public record PedidoDTOPostRequest(
 
                 List<ItemPedido> itensPedido = itens
                         .stream()
-                        .map(ItemPedidoDTO::toItemPedidoModel)
+                        .map(ItemPedidoDTOPostRequest::toItemPedidoModel)
                         .toList();
 
                 itensPedido.forEach(pedido::adicionarItem);

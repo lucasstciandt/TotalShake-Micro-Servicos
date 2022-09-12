@@ -1,4 +1,4 @@
-package totalshake.ciandt.com.dataservicepedido.application.controller.request;
+package totalshake.ciandt.com.dataservicepedido.application.controller.request.put;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import totalshake.ciandt.com.dataservicepedido.domain.model.Status;
@@ -6,7 +6,7 @@ import totalshake.ciandt.com.dataservicepedido.domain.model.Status;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
-public record AtualizacaoPedidoDTORequest(
+public record AtualizacaoStatusPedidoDTORequest(
         @NotNull
         Status status,
 
@@ -35,7 +35,7 @@ public record AtualizacaoPedidoDTORequest(
         LocalDateTime dataHoraPagamentoRecusado
 ) {
 
-        public AtualizacaoPedidoDTORequest(Status status, LocalDateTime dataHoraRealizado) {
+        public AtualizacaoStatusPedidoDTORequest(Status status, LocalDateTime dataHoraRealizado) {
                 this(status, dataHoraRealizado, null, null, null,
                         null, null, null, null);
         }

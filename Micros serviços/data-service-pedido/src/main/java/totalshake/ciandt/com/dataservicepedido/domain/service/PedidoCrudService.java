@@ -1,8 +1,9 @@
 package totalshake.ciandt.com.dataservicepedido.domain.service;
 
 import org.springframework.stereotype.Service;
-import totalshake.ciandt.com.dataservicepedido.application.controller.request.AtualizacaoPedidoDTORequest;
-import totalshake.ciandt.com.dataservicepedido.application.controller.request.PedidoDTOPostRequest;
+import totalshake.ciandt.com.dataservicepedido.application.controller.request.put.AtualizacaoCompletaPedidoDTORequest;
+import totalshake.ciandt.com.dataservicepedido.application.controller.request.put.AtualizacaoStatusPedidoDTORequest;
+import totalshake.ciandt.com.dataservicepedido.application.controller.request.post.PedidoDTOPostRequest;
 import totalshake.ciandt.com.dataservicepedido.application.controller.response.PedidoDTOResponse;
 import totalshake.ciandt.com.dataservicepedido.application.error.ApiErroCodInternoMensagem;
 import totalshake.ciandt.com.dataservicepedido.application.error.exceptions.PedidoInexistenteException;
@@ -31,7 +32,24 @@ public class PedidoCrudService {
         return new PedidoDTOResponse(pedido.getUuidPedido());
     }
 
-    public PedidoDTOResponse atualizarPedido(UUID uuidPedido, AtualizacaoPedidoDTORequest atualizacaoDtoRequest) {
+    public PedidoDTOResponse atualizarPedido(UUID uuidPedido, AtualizacaoCompletaPedidoDTORequest pedidoAtualizado) {
+        var pedido = pedidoAtualizado.toPedidoModel();
+        pedido = this.pedidoRepository.save(pedido);
+
+        return new PedidoDTOResponse(
+                pedido.getUuidPedido(),
+                pedido.getUuidCliente(),
+                pedido.getUuidRestaurante(),
+                pedido.getUuidEntregador(),
+                pedido.getStatus(),
+                pedido.getTotal(),
+                pedido.getUltimaAtualizacao(),
+                pedido.getItens(),
+                pedido.getDataHoraStatus()
+        );
+    }
+
+    public PedidoDTOResponse atualizarStatusPedido(UUID uuidPedido, AtualizacaoStatusPedidoDTORequest atualizacaoDtoRequest) {
         var pedido = this.buscarPedidoPorId(uuidPedido);
         var dataHoraStatusPedidoAtualizado = atualizarDataHoraStatus(atualizacaoDtoRequest, pedido);
 
@@ -75,7 +93,7 @@ public class PedidoCrudService {
                 );
     }
 
-    private  DataHoraStatusPedido atualizarDataHoraStatus(AtualizacaoPedidoDTORequest atualizacaoDtoRequest, Pedido pedido) {
+    private  DataHoraStatusPedido atualizarDataHoraStatus(AtualizacaoStatusPedidoDTORequest atualizacaoDtoRequest, Pedido pedido) {
         var dataHoraStatusPedido = pedido.getDataHoraStatus();
 
         dataHoraStatusPedido.setDataHoraRealizado(atualizacaoDtoRequest.dataHoraRealizado());
@@ -89,5 +107,6 @@ public class PedidoCrudService {
 
         return dataHoraStatusPedido;
     }
+
 
 }

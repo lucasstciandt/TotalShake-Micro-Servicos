@@ -1,6 +1,5 @@
 package totalshake.ciandt.com.dataservicepedido.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,9 +12,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-import totalshake.ciandt.com.dataservicepedido.application.controller.request.AtualizacaoPedidoDTORequest;
-import totalshake.ciandt.com.dataservicepedido.application.controller.request.ItemPedidoDTO;
-import totalshake.ciandt.com.dataservicepedido.application.controller.request.PedidoDTOPostRequest;
+import totalshake.ciandt.com.dataservicepedido.application.controller.request.put.AtualizacaoStatusPedidoDTORequest;
+import totalshake.ciandt.com.dataservicepedido.application.controller.request.post.ItemPedidoDTOPostRequest;
+import totalshake.ciandt.com.dataservicepedido.application.controller.request.post.PedidoDTOPostRequest;
 import totalshake.ciandt.com.dataservicepedido.application.error.ApiErroCodInternoMensagem;
 import totalshake.ciandt.com.dataservicepedido.builders.PedidoBuilder;
 import totalshake.ciandt.com.dataservicepedido.domain.model.Pedido;
@@ -23,9 +22,7 @@ import totalshake.ciandt.com.dataservicepedido.domain.model.Status;
 import totalshake.ciandt.com.dataservicepedido.domain.repository.PedidoRepository;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -112,7 +109,7 @@ class PedidoControllerIntegrationTest {
                     UUID.randomUUID().toString(),
                     UUID.randomUUID().toString(),
                     new BigDecimal("99.99"),
-                    new ArrayList<ItemPedidoDTO>(List.of(new ItemPedidoDTO("Arroz", 2)))
+                    new ArrayList<ItemPedidoDTOPostRequest>(List.of(new ItemPedidoDTOPostRequest("Arroz", 2)))
             );
         }
 
@@ -121,7 +118,7 @@ class PedidoControllerIntegrationTest {
                     UUID.randomUUID().toString(),
                     UUID.randomUUID().toString(),
                     new BigDecimal("0.00"),
-                    new ArrayList<ItemPedidoDTO>()
+                    new ArrayList<ItemPedidoDTOPostRequest>()
             );
         }
     }
@@ -232,15 +229,15 @@ class PedidoControllerIntegrationTest {
             );
         }
 
-        private AtualizacaoPedidoDTORequest umDtoAtualizacaoInvalido() {
-            return new AtualizacaoPedidoDTORequest(
+        private AtualizacaoStatusPedidoDTORequest umDtoAtualizacaoInvalido() {
+            return new AtualizacaoStatusPedidoDTORequest(
                     null,
                     LocalDateTime.now()
             );
         }
 
-        private AtualizacaoPedidoDTORequest umDtoAtualizacaoPedido() {
-            return new AtualizacaoPedidoDTORequest(
+        private AtualizacaoStatusPedidoDTORequest umDtoAtualizacaoPedido() {
+            return new AtualizacaoStatusPedidoDTORequest(
                     Status.REALIZADO,
                     LocalDateTime.now()
             );

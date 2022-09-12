@@ -1,4 +1,4 @@
-package totalshake.ciandt.com.dataservicepedido.application.controller.request;
+package totalshake.ciandt.com.dataservicepedido.application.controller.request.post;
 
 import totalshake.ciandt.com.dataservicepedido.domain.model.ItemPedido;
 
@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
-public record ItemPedidoDTO(
+public record ItemPedidoDTOPostRequest(
         @NotNull @NotBlank @Size(min = 3, max = 120)
         String descricao,
         @Positive @NotNull
