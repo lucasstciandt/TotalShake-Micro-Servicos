@@ -2,7 +2,7 @@ package totalshake.ciandt.com.apipedido.application.controller;
 
 import org.springframework.http.HttpStatus;
 import totalshake.ciandt.com.apipedido.application.controller.request.ItemPedidoDTO;
-import totalshake.ciandt.com.apipedido.proxy.dataservicepedido.put.response.PedidoDTOGetResponse;
+import totalshake.ciandt.com.apipedido.proxy.put.response.PedidoDTOGetResponse;
 import totalshake.ciandt.com.apipedido.domain.service.crud.PedidoCrudService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,22 +39,13 @@ public class PedidoController {
                 .body(pedidoCrudService.adicionarItemNoPedido(uuidPedido, itemPedidoDTO));
     }
 
-    /*
-
-
-    @PutMapping("/{idPedido}/realizar")
-    public ResponseEntity<PedidoDTOResponse> realizarPedido(@PathVariable Long idPedido){
-        return ResponseEntity.ok(pedidoCrudService.realizarPedido(idPedido));
+    @PutMapping("/{uuidPedido}/realizar")
+    public ResponseEntity<PedidoDTOGetResponse> realizarPedido(@PathVariable UUID uuidPedido){
+        return ResponseEntity.ok(pedidoCrudService.realizarPedido(uuidPedido));
     }
 
-    @PutMapping("/{idPedido}/cancelar")
-    public ResponseEntity<PedidoDTOResponse> cancelarPedido(@PathVariable Long idPedido){
-        return ResponseEntity.ok(pedidoCrudService.cancelarPedido(idPedido));
+    @PutMapping("/{uuidPedido}/cancelar")
+    public ResponseEntity<PedidoDTOGetResponse> cancelarPedido(@PathVariable UUID uuidPedido){
+        return ResponseEntity.ok(pedidoCrudService.cancelarPedido(uuidPedido));
     }
-
-
-
-
-    }*/
-
 }

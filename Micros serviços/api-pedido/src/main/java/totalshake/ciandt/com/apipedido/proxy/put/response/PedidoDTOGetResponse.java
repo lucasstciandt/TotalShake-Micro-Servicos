@@ -1,4 +1,4 @@
-package totalshake.ciandt.com.apipedido.proxy.dataservicepedido.put.response;
+package totalshake.ciandt.com.apipedido.proxy.put.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

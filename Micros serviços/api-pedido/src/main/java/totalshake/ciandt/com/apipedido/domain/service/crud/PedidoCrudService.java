@@ -3,8 +3,8 @@ package totalshake.ciandt.com.apipedido.domain.service.crud;
 import org.springframework.stereotype.Service;
 import totalshake.ciandt.com.apipedido.application.controller.request.ItemPedidoDTO;
 import totalshake.ciandt.com.apipedido.proxy.DataServicePedidoProxy;
-import totalshake.ciandt.com.apipedido.proxy.dataservicepedido.put.AtualizacaoPedidoCompletaDTORequest;
-import totalshake.ciandt.com.apipedido.proxy.dataservicepedido.put.response.PedidoDTOGetResponse;
+import totalshake.ciandt.com.apipedido.proxy.put.AtualizacaoPedidoCompletaDTORequest;
+import totalshake.ciandt.com.apipedido.proxy.put.response.PedidoDTOGetResponse;
 
 import java.util.UUID;
 
@@ -79,26 +79,44 @@ public class PedidoCrudService {
         return this.dataServicePedidoProxy.atualizarPedido(pedidoDtoAtualizacao);
     }
 
-    /*
-        public PedidoDTOResponse realizarPedido(Long idPedido) {
-            var pedido = buscarPedidoPorId(idPedido);
-            pedido.realizarPedido();
-            pedido = pedidoRepository.save(pedido);
+    public PedidoDTOGetResponse realizarPedido(UUID pedidoId) {
+        var pedidoDto  = this.dataServicePedidoProxy.buscarPedido(pedidoId);
 
-            return new PedidoDTOResponse(pedido);
-        }
+        var pedidoModel = pedidoDto.toPedidoModel();
+        pedidoModel.realizarPedido();
 
-        public PedidoDTOResponse cancelarPedido(Long idPedido) {
-            var pedido = this.buscarPedidoPorId(idPedido);
-            pedido.cancelarPedido();
-            pedido = pedidoRepository.save(pedido);
+        var pedidoDtoAtualizacao = new AtualizacaoPedidoCompletaDTORequest(
+                pedidoModel.getUuidPedido(),
+                pedidoModel.getUuidCliente(),
+                pedidoModel.getUuidRestaurante(),
+                pedidoModel.getUuidEntregador(),
+                pedidoModel.getStatus(),
+                pedidoModel.getTotal(),
+                pedidoModel.getItens(),
+                pedidoModel.getDataHoraStatus()
+        );
 
-            return new PedidoDTOResponse(pedido);
-        }
+        return this.dataServicePedidoProxy.atualizarPedido(pedidoDtoAtualizacao);
+    }
 
+    public PedidoDTOGetResponse cancelarPedido(UUID pedidoId) {
+        var pedidoDto  = this.dataServicePedidoProxy.buscarPedido(pedidoId);
 
+        var pedidoModel = pedidoDto.toPedidoModel();
+        pedidoModel.cancelarPedido();
 
+        var pedidoDtoAtualizacao = new AtualizacaoPedidoCompletaDTORequest(
+                pedidoModel.getUuidPedido(),
+                pedidoModel.getUuidCliente(),
+                pedidoModel.getUuidRestaurante(),
+                pedidoModel.getUuidEntregador(),
+                pedidoModel.getStatus(),
+                pedidoModel.getTotal(),
+                pedidoModel.getItens(),
+                pedidoModel.getDataHoraStatus()
+        );
 
-    }*/
+        return this.dataServicePedidoProxy.atualizarPedido(pedidoDtoAtualizacao);
+    }
 
 }
