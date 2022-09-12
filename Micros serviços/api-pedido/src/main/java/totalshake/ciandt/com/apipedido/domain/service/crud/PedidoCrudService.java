@@ -1,10 +1,9 @@
 package totalshake.ciandt.com.apipedido.domain.service.crud;
 
-import totalshake.ciandt.com.apipedido.domain.repository.PedidoRepository;
 import org.springframework.stereotype.Service;
 import totalshake.ciandt.com.apipedido.proxy.DataServicePedidoProxy;
-import totalshake.ciandt.com.apipedido.proxy.request.put.AtualizacaoPedidoCompletaDTORequest;
-import totalshake.ciandt.com.apipedido.proxy.response.PedidoDTOGetResponse;
+import totalshake.ciandt.com.apipedido.proxy.dataservicepedido.put.AtualizacaoPedidoCompletaDTORequest;
+import totalshake.ciandt.com.apipedido.proxy.dataservicepedido.put.response.PedidoDTOGetResponse;
 
 import java.util.UUID;
 
@@ -38,6 +37,26 @@ public class PedidoCrudService {
         return this.dataServicePedidoProxy.atualizarPedido(pedidoDtoAtualizacao);
     }
 
+    public PedidoDTOGetResponse reduzirQuantidadeItem(UUID pedidoId, Long itemId, int quantidade) {
+        var pedidoDto = this.dataServicePedidoProxy.buscarPedido(pedidoId);
+        var pedidoModel = pedidoDto.toPedidoModel();
+
+        pedidoModel.reduzirItemDoPedido(itemId, quantidade);
+
+        var pedidoDtoAtualizacao = new AtualizacaoPedidoCompletaDTORequest(
+                pedidoModel.getUuidPedido(),
+                pedidoModel.getUuidCliente(),
+                pedidoModel.getUuidRestaurante(),
+                pedidoModel.getUuidEntregador(),
+                pedidoModel.getStatus(),
+                pedidoModel.getTotal(),
+                pedidoModel.getItens(),
+                pedidoModel.getDataHoraStatus()
+        );
+
+        return this.dataServicePedidoProxy.atualizarPedido(pedidoDtoAtualizacao);
+    }
+
 
     /*
         public PedidoDTOResponse realizarPedido(Long idPedido) {
@@ -56,13 +75,7 @@ public class PedidoCrudService {
             return new PedidoDTOResponse(pedido);
         }
 
-    public PedidoDTOResponse reduzirQuantidadeItem(Long pedidoId, Long itemId, int quantidade) {
-        var pedido = this.buscarPedidoPorId(pedidoId);
-        pedido.reduzirItemDoPedido(itemId, quantidade);
-        pedido = pedidoRepository.save(pedido);
 
-        return new PedidoDTOResponse(pedido);
-    }
 
     public PedidoDTOResponse adicionarItemNoPedido(Long pedidoId, ItemPedidoDTO itemPedidoDTO) {
         var pedido = this.buscarPedidoPorId(pedidoId);
