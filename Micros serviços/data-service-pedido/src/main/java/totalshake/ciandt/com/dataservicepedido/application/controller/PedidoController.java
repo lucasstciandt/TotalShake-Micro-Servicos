@@ -41,10 +41,4 @@ public class PedidoController {
     ){
         return ResponseEntity.ok(pedidoCrudService.atualizarPedido(pedidoAtualizado));
     }
-
-    @PutMapping("/{uuidPedido}")
-    public ResponseEntity<PedidoDTOResponse> atualizarStatusPedido(@PathVariable UUID uuidPedido,
-                                                                   @RequestBody @Valid AtualizacaoStatusPedidoDTORequest atualizacaoDtoRequest){
-        return ResponseEntity.ok(pedidoCrudService.atualizarStatusPedido(uuidPedido, atualizacaoDtoRequest));
-    }
 }
