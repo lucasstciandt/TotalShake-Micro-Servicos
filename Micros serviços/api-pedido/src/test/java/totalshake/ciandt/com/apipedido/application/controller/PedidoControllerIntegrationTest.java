@@ -274,7 +274,7 @@ public class PedidoControllerIntegrationTest {
 
             String itemPedidoRequest = objectMapper.writeValueAsString(novoItemPedido);
 
-            mockMvc.perform(post(PEDIDO_URI +"/"+pedidoSalvo.getId()+"/adicionar-item")
+            mockMvc.perform(post(PEDIDO_URI +"/"+pedidoSalvo.getId()+"/adicionar-descricao")
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(itemPedidoRequest)
                     )

@@ -3,7 +3,7 @@ package totalshake.ciandt.com.apipedido.application.errors;
 public enum CodInternoErroApi {
     AP001("AP-001", "Um ou mais campos invalidos"),
     AP201("AP-201", "Pedido inexistente"),
-    AP202("AP-202", "Esse item não existe no pedido"),
+    AP202("AP-202", "Esse descricao não existe no pedido"),
     AP203("AP-203", "Quantidade inválida, informe um valor maior que 0"),
     AP301("AP-301", "Operação inválida, verifique o Status do pedido"),
     ;

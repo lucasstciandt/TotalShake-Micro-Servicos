@@ -1,6 +1,7 @@
 package totalshake.ciandt.com.apipedido.domain.service.crud;
 
 import org.springframework.stereotype.Service;
+import totalshake.ciandt.com.apipedido.application.controller.request.ItemPedidoDTO;
 import totalshake.ciandt.com.apipedido.proxy.DataServicePedidoProxy;
 import totalshake.ciandt.com.apipedido.proxy.dataservicepedido.put.AtualizacaoPedidoCompletaDTORequest;
 import totalshake.ciandt.com.apipedido.proxy.dataservicepedido.put.response.PedidoDTOGetResponse;
@@ -57,6 +58,26 @@ public class PedidoCrudService {
         return this.dataServicePedidoProxy.atualizarPedido(pedidoDtoAtualizacao);
     }
 
+    public PedidoDTOGetResponse adicionarItemNoPedido(UUID pedidoId, ItemPedidoDTO itemPedidoDTO) {
+        var pedidoDto = this.dataServicePedidoProxy.buscarPedido(pedidoId);
+        var pedidoModel = pedidoDto.toPedidoModel();
+
+        var itemPedido = itemPedidoDTO.toItemPedidoModel();
+        pedidoModel.adicionarItem(itemPedido);
+
+        var pedidoDtoAtualizacao = new AtualizacaoPedidoCompletaDTORequest(
+                pedidoModel.getUuidPedido(),
+                pedidoModel.getUuidCliente(),
+                pedidoModel.getUuidRestaurante(),
+                pedidoModel.getUuidEntregador(),
+                pedidoModel.getStatus(),
+                pedidoModel.getTotal(),
+                pedidoModel.getItens(),
+                pedidoModel.getDataHoraStatus()
+        );
+
+        return this.dataServicePedidoProxy.atualizarPedido(pedidoDtoAtualizacao);
+    }
 
     /*
         public PedidoDTOResponse realizarPedido(Long idPedido) {
@@ -77,13 +98,7 @@ public class PedidoCrudService {
 
 
 
-    public PedidoDTOResponse adicionarItemNoPedido(Long pedidoId, ItemPedidoDTO itemPedidoDTO) {
-        var pedido = this.buscarPedidoPorId(pedidoId);
-        var itemPedido = itemPedidoDTO.toItemPedidoModel();
-        pedido.adicionarItem(itemPedido);
-        pedido = pedidoRepository.save(pedido);
 
-        return new PedidoDTOResponse(pedido);
     }*/
 
 }

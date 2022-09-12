@@ -1,10 +1,13 @@
 package totalshake.ciandt.com.apipedido.application.controller;
 
+import org.springframework.http.HttpStatus;
+import totalshake.ciandt.com.apipedido.application.controller.request.ItemPedidoDTO;
 import totalshake.ciandt.com.apipedido.proxy.dataservicepedido.put.response.PedidoDTOGetResponse;
 import totalshake.ciandt.com.apipedido.domain.service.crud.PedidoCrudService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.UUID;
 
 @RestController
@@ -29,13 +32,15 @@ public class PedidoController {
         return ResponseEntity.ok(pedidoCrudService.reduzirQuantidadeItem(uuidPedido, itemId, quantidade));
     }
 
-    /*
-    @PostMapping("/{idPedido}/adicionar-item")
-    public ResponseEntity<PedidoDTOResponse> adicionarItem(@PathVariable Long idPedido,
+    @PostMapping("/{uuidPedido}/adicionar-item")
+    public ResponseEntity<PedidoDTOGetResponse> adicionarItem(@PathVariable UUID uuidPedido,
                                                            @RequestBody @Valid ItemPedidoDTO itemPedidoDTO){
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(pedidoCrudService.adicionarItemNoPedido(idPedido, itemPedidoDTO));
+                .body(pedidoCrudService.adicionarItemNoPedido(uuidPedido, itemPedidoDTO));
     }
+
+    /*
+
 
     @PutMapping("/{idPedido}/realizar")
     public ResponseEntity<PedidoDTOResponse> realizarPedido(@PathVariable Long idPedido){
