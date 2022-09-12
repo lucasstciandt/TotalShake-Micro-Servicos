@@ -2,7 +2,6 @@ package totalshake.ciandt.com.dataservicepedido.domain.service;
 
 import org.springframework.stereotype.Service;
 import totalshake.ciandt.com.dataservicepedido.application.controller.request.put.AtualizacaoCompletaPedidoDTORequest;
-import totalshake.ciandt.com.dataservicepedido.application.controller.request.put.AtualizacaoStatusPedidoDTORequest;
 import totalshake.ciandt.com.dataservicepedido.application.controller.request.post.PedidoDTOPostRequest;
 import totalshake.ciandt.com.dataservicepedido.application.controller.response.PedidoDTOResponse;
 import totalshake.ciandt.com.dataservicepedido.application.error.ApiErroCodInternoMensagem;

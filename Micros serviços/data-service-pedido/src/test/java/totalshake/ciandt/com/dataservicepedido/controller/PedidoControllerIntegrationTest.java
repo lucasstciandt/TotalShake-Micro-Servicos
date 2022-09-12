@@ -13,7 +13,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import totalshake.ciandt.com.dataservicepedido.application.controller.request.put.AtualizacaoCompletaPedidoDTORequest;
-import totalshake.ciandt.com.dataservicepedido.application.controller.request.put.AtualizacaoStatusPedidoDTORequest;
 import totalshake.ciandt.com.dataservicepedido.application.controller.request.post.ItemPedidoDTOPostRequest;
 import totalshake.ciandt.com.dataservicepedido.application.controller.request.post.PedidoDTOPostRequest;
 import totalshake.ciandt.com.dataservicepedido.application.error.ApiErroCodInternoMensagem;
@@ -23,7 +22,6 @@ import totalshake.ciandt.com.dataservicepedido.domain.model.Status;
 import totalshake.ciandt.com.dataservicepedido.domain.repository.PedidoRepository;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
