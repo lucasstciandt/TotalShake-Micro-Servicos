@@ -37,7 +37,7 @@ public class PedidoController {
 
     @PutMapping("/atualizar")
     public ResponseEntity<PedidoDTOResponse> atualizarPedido(
-            @RequestBody AtualizacaoCompletaPedidoDTORequest pedidoAtualizado
+            @RequestBody @Valid AtualizacaoCompletaPedidoDTORequest pedidoAtualizado
     ){
         return ResponseEntity.ok(pedidoCrudService.atualizarPedido(pedidoAtualizado));
     }

@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+import totalshake.ciandt.com.dataservicepedido.application.controller.request.put.AtualizacaoCompletaPedidoDTORequest;
 import totalshake.ciandt.com.dataservicepedido.application.controller.request.put.AtualizacaoStatusPedidoDTORequest;
 import totalshake.ciandt.com.dataservicepedido.application.controller.request.post.ItemPedidoDTOPostRequest;
 import totalshake.ciandt.com.dataservicepedido.application.controller.request.post.PedidoDTOPostRequest;
@@ -169,7 +170,7 @@ class PedidoControllerIntegrationTest {
     }
 
     @Nested
-    class TestesAtualizarPedido{
+    class TestesAtualizacaoStatusPedido {
 
         @Test
         @Transactional
@@ -185,7 +186,7 @@ class PedidoControllerIntegrationTest {
                             .content(pedidoRequestJson)
                     )
                     .andExpect(status().isOk())
-                    .andExpect(jsonPath("uuid_pedido").isNotEmpty())
+                    .andExpect(jsonPath("uuidPedido").isNotEmpty())
                     .andExpect(jsonPath("status").value(Status.REALIZADO.name()))
                     .andExpect(jsonPath("ultimaAtualizacao").isNotEmpty())
                     .andExpect(jsonPath("dataHoraStatus").isNotEmpty());
@@ -240,6 +241,98 @@ class PedidoControllerIntegrationTest {
             return new AtualizacaoStatusPedidoDTORequest(
                     Status.REALIZADO,
                     LocalDateTime.now()
+            );
+        }
+    }
+
+    @Nested
+    class TestesAtualizacaoCompletaPedido{
+
+        @Test
+        @Transactional
+        public void deve_atualizarUmPedido_e_devolverDtoCompleto() throws Exception {
+            var pedido = PedidoBuilder.umPedido().comUmItemPedido().build();
+            var pedidoSalvo = pedidoRepository.save(pedido);
+
+            var atualizacaoPedidoDtoValido = umDtoAtualizacaoCompletoPedido(pedidoSalvo);
+
+            String pedidoRequestJson = objectMapper.writeValueAsString(atualizacaoPedidoDtoValido);
+
+            mockMvc.perform(put(PEDIDO_URI + "/atualizar" )
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(pedidoRequestJson)
+                    )
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("uuidPedido").isNotEmpty())
+                    .andExpect(jsonPath("uuidCliente").isNotEmpty())
+                    .andExpect(jsonPath("uuidRestaurante").isNotEmpty())
+                    .andExpect(jsonPath("status").value(Status.REALIZADO.name()))
+                    .andExpect(jsonPath("total").value(99.99))
+                    .andExpect(jsonPath("ultimaAtualizacao").isNotEmpty())
+                    .andExpect(jsonPath("dataHoraStatus").isNotEmpty());
+
+            var pedidoCriado = pedidoRepository.findAll().get(0);
+
+            assertAll(
+                    () -> assertEquals(1, pedidoCriado.getItens().size()),
+                    () -> assertEquals(Status.REALIZADO, pedidoCriado.getStatus()),
+                    () -> assertEquals(new BigDecimal("99.99"),pedidoCriado.getTotal()),
+                    () -> assertNotNull(pedidoCriado.getDataHoraStatus())
+            );
+        }
+
+        @Test
+        @Transactional
+        public void deve_lancarExcecaoDeCampoInvalidoQuando_atualizacaoNaoTiverCamposObrigatorios() throws Exception {
+            var pedido = PedidoBuilder.umPedido().comUmItemPedido().build();
+            pedidoRepository.save(pedido);
+
+            var atualizacaoPedidoDtoInValido = umDtoAtualizacaoCompletoPedidoInvalido();
+            String pedidoRequestJson = objectMapper.writeValueAsString(atualizacaoPedidoDtoInValido);
+
+            mockMvc.perform(put(PEDIDO_URI + "/atualizar")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(pedidoRequestJson)
+                    )
+                    .andExpect(status().isUnprocessableEntity())
+                    .andExpect(jsonPath("mensagem").value(ApiErroCodInternoMensagem.DSP001.getMensagem()))
+                    .andExpect(jsonPath("codInterno").value(ApiErroCodInternoMensagem.DSP001.getCodigo()))
+                    .andExpect(jsonPath("erros").isNotEmpty());
+
+
+            var pedidoCriado = pedidoRepository.findAll().get(0);
+
+            assertAll(
+                    () -> assertEquals(1, pedidoCriado.getItens().size()),
+                    () -> assertNotEquals(Status.REALIZADO, pedidoCriado.getStatus()),
+                    () -> assertNotEquals(new BigDecimal("99.99"), pedidoCriado.getTotal()),
+                    () -> assertNull(pedidoCriado.getDataHoraStatus().getDataHoraRealizado())
+            );
+        }
+
+        private AtualizacaoCompletaPedidoDTORequest umDtoAtualizacaoCompletoPedidoInvalido() {
+            return new AtualizacaoCompletaPedidoDTORequest(
+                    "xcasdasdasd-dsdasda",
+                    null,
+                    null,
+                    null,
+                    Status.REALIZADO,
+                    new BigDecimal("99.99"),
+                    null,
+                    null
+            );
+        }
+
+        private AtualizacaoCompletaPedidoDTORequest umDtoAtualizacaoCompletoPedido(Pedido pedido) {
+            return new AtualizacaoCompletaPedidoDTORequest(
+                    pedido.getUuidPedido().toString(),
+                    pedido.getUuidCliente().toString(),
+                    pedido.getUuidRestaurante().toString(),
+                    null,
+                    Status.REALIZADO,
+                    new BigDecimal("99.99"),
+                    pedido.getItens(),
+                    pedido.getDataHoraStatus()
             );
         }
     }

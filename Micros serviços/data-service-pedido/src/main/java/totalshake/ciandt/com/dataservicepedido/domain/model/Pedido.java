@@ -28,7 +28,7 @@ public class Pedido {
     private BigDecimal total;
 
     @Column(name = "ultima_atualizacao")
-    private LocalDateTime ultimaAtualizacao;
+    private LocalDateTime ultimaAtualizacao = LocalDateTime.now();;
 
     @OneToOne(
             fetch = FetchType.LAZY,
@@ -126,10 +126,6 @@ public class Pedido {
         this.dataHoraStatus = dataHoraStatus;
     }
 
-    @PrePersist
-    public void setarUltimaAtualizacaoPedido(){
-        this.ultimaAtualizacao = LocalDateTime.now();
-    }
 
     private void garantirNullSafetyItens() {
         if(itens == null){
