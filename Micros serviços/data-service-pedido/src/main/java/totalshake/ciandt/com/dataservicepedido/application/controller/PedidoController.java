@@ -9,6 +9,7 @@ import totalshake.ciandt.com.dataservicepedido.application.controller.response.P
 import totalshake.ciandt.com.dataservicepedido.domain.service.PedidoCrudService;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @RestController
@@ -38,5 +39,10 @@ public class PedidoController {
             @RequestBody @Valid AtualizacaoCompletaPedidoDTORequest pedidoAtualizado
     ){
         return ResponseEntity.ok(pedidoCrudService.atualizarPedido(pedidoAtualizado));
+    }
+
+    @GetMapping("/{uuidPedido}/total")
+    public ResponseEntity<PedidoDTOResponse> totalPedido(@PathVariable UUID uuidPedido){
+        return ResponseEntity.ok(pedidoCrudService.buscarTotalPedido(uuidPedido));
     }
 }

@@ -44,4 +44,9 @@ public record PedidoDTOResponse(
                 this(uuid_pedido, null, null, null,
                         status, null, ultimaAtualizacao, null, dataHoraStatusPedido);
         }
+
+        public PedidoDTOResponse(BigDecimal total) {
+                this(null, null, null, null, null,
+                        total, null, null, null);
+        }
 }

@@ -258,4 +258,39 @@ class PedidoControllerIntegrationTest {
             );
         }
     }
+
+    @Nested
+    class TestesBuscarTotalPedido{
+
+        @Test
+        @Transactional
+        public void deve_buscarOTotalDeUmPedidoComSucesso_e_devolverDTOSomenteComTotal() throws Exception{
+            var pedido = PedidoBuilder.umPedido().comUmItemPedido().build();
+
+            var pedidoSalvo = pedidoRepository.save(pedido);
+
+            mockMvc.perform(get(PEDIDO_URI +"/"+pedidoSalvo.getUuidPedido()+"/total"))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("total").isNotEmpty())
+                    .andExpect(jsonPath("total").value(new BigDecimal("67.0")));
+
+            Pedido pedidoCriado = pedidoRepository.findAll().get(0);
+
+            assertEquals(new BigDecimal("67.00"), pedidoCriado.getTotal());
+        }
+
+        @Test
+        @Transactional
+        public void deve_lancarExcecaoDePedidoInexistente_e_devolverDTODeErroParaOCliente() throws Exception{
+
+            mockMvc.perform(get(PEDIDO_URI +"/"+ UUID.randomUUID() +"/total"))
+                    .andExpect(status().isNotFound())
+                    .andExpect(jsonPath("mensagem").value(ApiErroCodInternoMensagem.DSP002.getMensagem()))
+                    .andExpect(jsonPath("codInterno").value(ApiErroCodInternoMensagem.DSP002.getCodigo()));
+
+            int registrosDePedidoNoDatabase = pedidoRepository.findAll().size();
+            assertEquals(0, registrosDePedidoNoDatabase);
+        }
+
+    }
 }

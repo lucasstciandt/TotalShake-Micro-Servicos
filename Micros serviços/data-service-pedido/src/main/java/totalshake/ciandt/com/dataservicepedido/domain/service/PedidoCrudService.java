@@ -10,6 +10,7 @@ import totalshake.ciandt.com.dataservicepedido.domain.model.DataHoraStatusPedido
 import totalshake.ciandt.com.dataservicepedido.domain.model.Pedido;
 import totalshake.ciandt.com.dataservicepedido.domain.repository.PedidoRepository;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Service
@@ -75,4 +76,8 @@ public class PedidoCrudService {
                 );
     }
 
+    public PedidoDTOResponse buscarTotalPedido(UUID uuidPedido) {
+        var pedido = this.buscarPedidoPorId(uuidPedido);
+        return new PedidoDTOResponse(pedido.getTotal());
+    }
 }
