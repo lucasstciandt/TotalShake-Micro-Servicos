@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import totalshake.ciandt.com.dataservicecliente.application.error.exceptions.ClienteInexistenteException;
+import totalshake.ciandt.com.dataservicecliente.application.error.exceptions.ValorInvalidoException;
 import totalshake.ciandt.com.dataservicecliente.application.error.response.ErroDTOCampoResponse;
 import totalshake.ciandt.com.dataservicecliente.application.error.response.ErroDTOResponse;
 
@@ -45,5 +46,15 @@ public class ApiExceptionHandler {
                 ex.getCodInternoErro()
         );
         return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
+    @ExceptionHandler(ValorInvalidoException.class)
+    public ResponseEntity<ErroDTOResponse> handleClienteInexistenteException(ValorInvalidoException ex, WebRequest request) {
+        ErroDTOResponse error = new ErroDTOResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                ex.getMessage(),
+                ex.getCodInternoErro()
+        );
+        return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 }

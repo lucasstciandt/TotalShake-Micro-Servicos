@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -157,6 +158,57 @@ class ClienteIntegrationTests {
 
             int quantidadeRegistrosClienteDatabase = clienteRepository.findAll().size();
             assertEquals(0, quantidadeRegistrosClienteDatabase);
+        }
+    }
+
+    @Nested
+    class TestesAdicionarSaldoCliente{
+
+        @Test
+        @Transactional
+        public void deve_adicionarSaldoAoCliente_e_devolverDtoComUuidNomeSaldo() throws Exception{
+            var cliente = ClienteBuilder.umCliente().comEndereco().build();
+
+            var clienteSalvo = clienteRepository.save(cliente);
+
+            var saldoParaAdicao = new BigDecimal("70.99");
+
+            mockMvc.perform(put(
+                    CLIENTE_URI +"/" +clienteSalvo.getUuidCliente()
+                            +"/adicionar-saldo/"+ saldoParaAdicao)
+                    )
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("uuid").isNotEmpty())
+                    .andExpect(jsonPath("nome").isNotEmpty())
+                    .andExpect(jsonPath("saldo").isNotEmpty())
+                    .andExpect(jsonPath("saldo").value(new BigDecimal("70.99")));
+
+            Cliente clienteExistente = clienteRepository.findAll().get(0);
+            assertEquals(clienteExistente.getSaldo(), new BigDecimal("70.99"));
+        }
+
+
+        @Test
+        @Transactional
+        public void deve_lancarExcecaoDeValorInvalidoAoTentarAdicionarSaldo_e_devolverDTOErro() throws Exception{
+            var cliente = ClienteBuilder.umCliente().comEndereco().build();
+            cliente.setSaldo(new BigDecimal("70.99"));
+
+            var clienteSalvo = clienteRepository.save(cliente);
+
+            var saldoParaAdicao = new BigDecimal("0.00");
+
+            mockMvc.perform(put(
+                            CLIENTE_URI +"/" + clienteSalvo.getUuidCliente()
+                                    +"/adicionar-saldo/"+ saldoParaAdicao)
+                    )
+                    .andExpect(status().isBadRequest())
+                    .andExpect(jsonPath("httpCode").value(HttpStatus.BAD_REQUEST.value()))
+                    .andExpect(jsonPath("mensagem").value(ApiErroCodInternoMensagem.DSC101.getMensagem()))
+                    .andExpect(jsonPath("codInterno").value(ApiErroCodInternoMensagem.DSC101.getCodigo()));
+
+            Cliente clienteExistente = clienteRepository.findAll().get(0);
+            assertEquals(clienteExistente.getSaldo(), new BigDecimal("70.99"));
         }
     }
 }

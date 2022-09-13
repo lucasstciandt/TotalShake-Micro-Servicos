@@ -3,7 +3,8 @@ package totalshake.ciandt.com.dataservicecliente.application.error;
 public enum ApiErroCodInternoMensagem {
 
     DSC001("DSC-001", "Um ou mais campos inválidos"),
-    DSC002("DSC-002","Recurso Inexistente" );
+    DSC002("DSC-002","Recurso Inexistente" ),
+    DSC101("DSC-101","Quantia invalida" );
 
     private final String codigo;
     private final String mensagem;
