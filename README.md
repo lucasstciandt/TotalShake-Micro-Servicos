@@ -18,7 +18,7 @@ A ideia é criar uma documentação rica a medida que o projeto vai avançando, 
 - API Discovery/Naming Server :heavy_check_mark:
 - API Gateway :heavy_check_mark:
 - API de Pedidos :construction:
-- API de Pagamento :x:
+- API de Pagamento :construction:
 - API de Restaurante :x:
 - API de entregador :x:
 - Integração funcional de todos os serviços :x:
