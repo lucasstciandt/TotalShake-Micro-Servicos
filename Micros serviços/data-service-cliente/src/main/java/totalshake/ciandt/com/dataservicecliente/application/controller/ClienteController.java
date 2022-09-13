@@ -36,7 +36,12 @@ public class ClienteController {
 
     @PutMapping("/{uuidCliente}/adicionar-saldo/{valor}")
     public ResponseEntity<ClienteDTOResponse> adicionarSaldo(@PathVariable UUID uuidCliente,
-                                                            @PathVariable @Valid @NotNull @Positive BigDecimal valor){
+                                                            @PathVariable BigDecimal valor){
         return ResponseEntity.ok(clienteCrudService.adicionarSaldo(uuidCliente, valor));
+    }
+
+    @GetMapping("/{uuidCliente}/saldo-carteira")
+    public ResponseEntity<ClienteDTOResponse> buscarSaldoCarteira(@PathVariable UUID uuidCliente){
+        return ResponseEntity.ok(clienteCrudService.buscarSaldoCarteira(uuidCliente));
     }
 }

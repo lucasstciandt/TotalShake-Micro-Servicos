@@ -42,12 +42,9 @@ public class ClienteCrudService {
         );
     }
 
-    public Cliente buscarCliente(UUID uuidCliente) {
-       return  clienteRepository.findById(uuidCliente)
-               .orElseThrow(() -> new ClienteInexistenteException(
-                       ApiErroCodInternoMensagem.DSC002.getCodigo(),
-                       ApiErroCodInternoMensagem.DSC002.getMensagem())
-               );
+    public ClienteDTOResponse buscarSaldoCarteira(UUID uuidCliente) {
+        var cliente = this.buscarCliente(uuidCliente);
+        return new ClienteDTOResponse(cliente.getSaldo());
     }
 
     public ClienteDTOResponse adicionarSaldo(UUID uuidCliente, BigDecimal valor) {
@@ -66,6 +63,14 @@ public class ClienteCrudService {
                 cliente.getNome(),
                 cliente.getSaldo()
         );
+    }
+
+    public Cliente buscarCliente(UUID uuidCliente) {
+       return  clienteRepository.findById(uuidCliente)
+               .orElseThrow(() -> new ClienteInexistenteException(
+                       ApiErroCodInternoMensagem.DSC002.getCodigo(),
+                       ApiErroCodInternoMensagem.DSC002.getMensagem())
+               );
     }
 
     private void verificarQuantia(BigDecimal valor) {

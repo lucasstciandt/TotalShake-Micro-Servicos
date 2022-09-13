@@ -27,7 +27,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
@@ -152,6 +151,39 @@ class ClienteIntegrationTests {
         public void deve_lancarExcecaoDeClienteInexistente_e_devolverErroParaOCliente() throws Exception{
 
             mockMvc.perform(get(CLIENTE_URI +"/"+ UUID.randomUUID()))
+                    .andExpect(status().isNotFound())
+                    .andExpect(jsonPath("mensagem").value(ApiErroCodInternoMensagem.DSC002.getMensagem()))
+                    .andExpect(jsonPath("codInterno").value(ApiErroCodInternoMensagem.DSC002.getCodigo()));
+
+            int quantidadeRegistrosClienteDatabase = clienteRepository.findAll().size();
+            assertEquals(0, quantidadeRegistrosClienteDatabase);
+        }
+    }
+
+    @Nested
+    class TestesBuscarSaldoCliente{
+        @Test
+        @Transactional
+        public void deve_buscarSaldoCarteiraCliente_e_devolverDTOComSaldo() throws Exception{
+            var cliente = ClienteBuilder.umCliente().comEndereco().build();
+            cliente.setSaldo(new BigDecimal("100.48"));
+
+            var clienteSalvo = clienteRepository.save(cliente);
+
+            mockMvc.perform(get(CLIENTE_URI + "/" +clienteSalvo.getUuidCliente() +"/saldo-carteira"))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("saldo").isNotEmpty())
+                    .andExpect(jsonPath("saldo").value(new BigDecimal("100.48")));
+
+            Cliente clienteBuscado = clienteRepository.findAll().get(0);
+            assertEquals(new BigDecimal("100.48"), clienteBuscado.getSaldo());
+        }
+
+        @Test
+        @Transactional
+        public void deve_lancarExcecaoDeClienteInexistente_e_devolverErroParaOCliente() throws Exception{
+
+            mockMvc.perform(get(CLIENTE_URI +"/"+ UUID.randomUUID()+"/saldo-carteira"))
                     .andExpect(status().isNotFound())
                     .andExpect(jsonPath("mensagem").value(ApiErroCodInternoMensagem.DSC002.getMensagem()))
                     .andExpect(jsonPath("codInterno").value(ApiErroCodInternoMensagem.DSC002.getCodigo()));

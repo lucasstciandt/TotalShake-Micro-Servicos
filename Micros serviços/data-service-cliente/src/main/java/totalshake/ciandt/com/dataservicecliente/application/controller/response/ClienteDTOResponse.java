@@ -23,4 +23,7 @@ public record ClienteDTOResponse(
         this(uuid, nome, null, saldo, null, null, null);
     }
 
+    public ClienteDTOResponse(BigDecimal saldo) {
+        this(null, null, null, saldo, null, null, null);
+    }
 }
