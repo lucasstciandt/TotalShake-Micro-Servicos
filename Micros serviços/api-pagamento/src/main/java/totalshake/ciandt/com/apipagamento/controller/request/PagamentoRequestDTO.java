@@ -1,7 +1,7 @@
 package totalshake.ciandt.com.apipagamento.controller.request;
 
 import javax.validation.constraints.*;
-import java.math.BigDecimal;
+import java.util.UUID;
 
 public record PagamentoRequestDTO(
         @NotEmpty @NotNull
@@ -16,4 +16,15 @@ public record PagamentoRequestDTO(
         @NotBlank @Size(min = 36, max = 36, message = "UUID invalido")
         String uuidRestaurante
 ) {
+        public UUID getUuidCliente(){
+               return UUID.fromString(this.uuidCliente);
+        }
+
+        public UUID getUuidPedido(){
+                return UUID.fromString(this.uuidPedido);
+        }
+
+        public UUID getUuidRestaurante(){
+                return UUID.fromString(this.uuidRestaurante);
+        }
 }

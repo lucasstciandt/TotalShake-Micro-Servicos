@@ -2,6 +2,7 @@ package totalshake.ciandt.com.apipagamento.domain.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -23,7 +24,7 @@ public class Pagamento {
     private UUID uuidRestaurante;
 
     @Column(name = "data_hora_pagamento", nullable = false)
-    private LocalDate dataHoraPagamento;
+    private LocalDateTime dataHoraPagamento;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -32,4 +33,32 @@ public class Pagamento {
     @Enumerated(EnumType.STRING)
     @Column(name = "forma_pagamento", nullable = false)
     private FormaPagamento formaPagamento;
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setUuidPedido(UUID uuidPedido) {
+        this.uuidPedido = uuidPedido;
+    }
+
+    public void setUuidCliente(UUID uuidCliente) {
+        this.uuidCliente = uuidCliente;
+    }
+
+    public void setUuidRestaurante(UUID uuidRestaurante) {
+        this.uuidRestaurante = uuidRestaurante;
+    }
+
+    public void setDataHoraPagamento(LocalDateTime dataHoraPagamento) {
+        this.dataHoraPagamento = dataHoraPagamento;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public void setFormaPagamento(FormaPagamento formaPagamento) {
+        this.formaPagamento = formaPagamento;
+    }
 }
