@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import totalshake.ciandt.com.apipedido.proxy.put.AtualizacaoPedidoCompletaDTORequest;
-import totalshake.ciandt.com.apipedido.proxy.put.response.PedidoDTOGetResponse;
+import totalshake.ciandt.com.apipedido.proxy.request.AtualizacaoPedidoCompletaDTORequest;
+import totalshake.ciandt.com.apipedido.proxy.response.PedidoDTOGetResponse;
 
 import java.util.UUID;
 

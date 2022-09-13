@@ -1,28 +1,9 @@
 package totalshake.ciandt.com.apipedido.domain.service.crud;
 
-import totalshake.ciandt.com.apipedido.application.errors.exceptions.PedidoInexistenteException;
-import totalshake.ciandt.com.apipedido.builders.PedidoBuilder;
-import totalshake.ciandt.com.apipedido.domain.model.Pedido;
-import totalshake.ciandt.com.apipedido.domain.model.Status;
 import totalshake.ciandt.com.apipedido.domain.repository.PedidoRepository;
-import totalshake.ciandt.com.apipedido.domain.service.state.impl.CanceladoImpl;
-import totalshake.ciandt.com.apipedido.domain.service.state.impl.CriadoImpl;
-import totalshake.ciandt.com.apipedido.domain.service.state.impl.RealizadoImpl;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class PedidoCrudServiceTest {

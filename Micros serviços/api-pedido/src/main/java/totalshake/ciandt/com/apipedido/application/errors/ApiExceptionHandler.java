@@ -1,7 +1,6 @@
 package totalshake.ciandt.com.apipedido.application.errors;
 
 import totalshake.ciandt.com.apipedido.application.errors.exceptions.ItemInexistenteException;
-import totalshake.ciandt.com.apipedido.application.errors.exceptions.PedidoInexistenteException;
 import totalshake.ciandt.com.apipedido.application.errors.exceptions.QuantidadeInvalidaException;
 import totalshake.ciandt.com.apipedido.application.errors.exceptions.StatusInvalidoException;
 import totalshake.ciandt.com.apipedido.application.errors.response.ErroCampoResponseDTO;
@@ -36,16 +35,6 @@ public class ApiExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(error);
     }
-    @ExceptionHandler(PedidoInexistenteException.class)
-    public ResponseEntity<ExceptionResponseDTO> handlePedidoInexistenteException(PedidoInexistenteException ex, WebRequest request) {
-        ExceptionResponseDTO error = new ExceptionResponseDTO(
-                HttpStatus.NOT_FOUND.value(),
-                ex.getMessage(),
-                ex.getCodInternoErro()
-        );
-        return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
-    }
-
     @ExceptionHandler(ItemInexistenteException.class)
     public ResponseEntity<ExceptionResponseDTO> handleItemInexistenteException(ItemInexistenteException ex, WebRequest request) {
         ExceptionResponseDTO error = new ExceptionResponseDTO(

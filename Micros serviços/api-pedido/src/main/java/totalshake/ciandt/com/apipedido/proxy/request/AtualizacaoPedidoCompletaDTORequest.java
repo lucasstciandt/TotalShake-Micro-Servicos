@@ -1,4 +1,4 @@
-package totalshake.ciandt.com.apipedido.proxy.put;
+package totalshake.ciandt.com.apipedido.proxy.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import totalshake.ciandt.com.apipedido.domain.model.DataHoraStatusPedido;

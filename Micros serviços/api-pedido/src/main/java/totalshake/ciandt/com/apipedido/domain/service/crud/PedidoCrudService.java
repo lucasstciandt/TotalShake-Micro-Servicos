@@ -3,8 +3,8 @@ package totalshake.ciandt.com.apipedido.domain.service.crud;
 import org.springframework.stereotype.Service;
 import totalshake.ciandt.com.apipedido.application.controller.request.ItemPedidoDTO;
 import totalshake.ciandt.com.apipedido.proxy.DataServicePedidoProxy;
-import totalshake.ciandt.com.apipedido.proxy.put.AtualizacaoPedidoCompletaDTORequest;
-import totalshake.ciandt.com.apipedido.proxy.put.response.PedidoDTOGetResponse;
+import totalshake.ciandt.com.apipedido.proxy.request.AtualizacaoPedidoCompletaDTORequest;
+import totalshake.ciandt.com.apipedido.proxy.response.PedidoDTOGetResponse;
 
 import java.util.UUID;
 

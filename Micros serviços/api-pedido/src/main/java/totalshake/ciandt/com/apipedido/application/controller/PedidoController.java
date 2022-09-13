@@ -2,7 +2,7 @@ package totalshake.ciandt.com.apipedido.application.controller;
 
 import org.springframework.http.HttpStatus;
 import totalshake.ciandt.com.apipedido.application.controller.request.ItemPedidoDTO;
-import totalshake.ciandt.com.apipedido.proxy.put.response.PedidoDTOGetResponse;
+import totalshake.ciandt.com.apipedido.proxy.response.PedidoDTOGetResponse;
 import totalshake.ciandt.com.apipedido.domain.service.crud.PedidoCrudService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +11,7 @@ import javax.validation.Valid;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/pedidos")
+@RequestMapping("/v1/api-pedidos")
 public class PedidoController {
 
     private final PedidoCrudService pedidoCrudService;
